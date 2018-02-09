@@ -101,6 +101,7 @@
     <Compile Include="Base\BaseService.cs" />
     <Compile Include="IdentityService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PuzzleService.cs" />
     <Compile Include="TourService.cs" />
     <Compile Include="UserService.cs" />
   </ItemGroup>

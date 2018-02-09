@@ -22,7 +22,7 @@ namespace City.Tour.Library.Models.CityTour
         public string Email { get; set; }
         public string Source { get; set; }
         public bool IsDelete { get; set; }
-        public Nullable<System.DateTime> DeleteTime { get; set; }
+        public System.DateTime ModifyTime { get; set; }
         public bool IsAdmin { get; set; }
     }
 }

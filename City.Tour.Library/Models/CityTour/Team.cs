@@ -16,5 +16,7 @@ namespace City.Tour.Library.Models.CityTour
     {
         public System.Guid Id { get; set; }
         public System.DateTime CreateTime { get; set; }
+        public bool IsDelete { get; set; }
+        public System.DateTime ModifyTime { get; set; }
     }
 }

@@ -5,15 +5,15 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="41bacc85e33e4b0ca009c0ab42c5c44e" Name="Diagram1">
-        <EntityTypeShape EntityType="CityTourModel.Answer" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="CityTourModel.Hint" Width="1.5" PointX="5.25" PointY="3.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="CityTourModel.Puzzle" Width="1.5" PointX="3" PointY="2.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="CityTourModel.Tour" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
-        <AssociationConnector Association="CityTourModel.FK_Answers_Puzzles" ManuallyRouted="false" />
-        <AssociationConnector Association="CityTourModel.FK_Hints_Puzzles" ManuallyRouted="false" />
-        <AssociationConnector Association="CityTourModel.FK_Puzzles_Tours" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="CityTourModel.Team" Width="1.5" PointX="0.75" PointY="5.75" />
-        <EntityTypeShape EntityType="CityTourModel.User" Width="1.5" PointX="2.75" PointY="5.75" />
+        <EntityTypeShape EntityType="CityTourModel.Answer" Width="1.5" PointX="5.25" PointY="4" />
+        <EntityTypeShape EntityType="CityTourModel.Hint" Width="1.5" PointX="5.25" PointY="1.125" />
+        <EntityTypeShape EntityType="CityTourModel.Puzzle" Width="1.5" PointX="3" PointY="2" />
+        <EntityTypeShape EntityType="CityTourModel.Team" Width="1.5" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="CityTourModel.Tour" Width="1.5" PointX="0.75" PointY="2" />
+        <EntityTypeShape EntityType="CityTourModel.User" Width="1.5" PointX="7.75" PointY="0.75" />
+        <AssociationConnector Association="CityTourModel.FK_Answers_Puzzles" />
+        <AssociationConnector Association="CityTourModel.FK_Hints_Puzzles" />
+        <AssociationConnector Association="CityTourModel.FK_Puzzles_Tours" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

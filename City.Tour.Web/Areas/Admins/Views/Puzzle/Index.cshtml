@@ -1,50 +1,49 @@
-﻿@using Ci.Mvc.Sort
+﻿@using Ci.Extension
+@using Ci.Mvc.Sort
 @using Ci.Mvc.Sort.Models
 @using City.Tour.Library.Models.CityTour
-@using City.Tour.Web.Controllers
+@using City.Tour.Web.Areas.Admins.Controllers
 @using X.PagedList
 @using X.PagedList.Mvc
 @using X.PagedList.Mvc.Bootstrap4
-@model IEnumerable<City.Tour.Library.Models.CityTour.Tour>
+@model IEnumerable<City.Tour.Library.Models.CityTour.Puzzle>
 @{
-    /**/
-
-
     Layout = "~/Areas/Admins/Views/Shared/_Layout.cshtml";
     SortOrder sort = ViewBag.sort ?? new SortOrder();
+    Tour tour = ViewBag.tour;
 }
 
 @section contents{
     <link href="~/Content/bootstrap-product.css" rel="stylesheet" />
 }
 
-<h2>導覽列表</h2>
+<h2>@tour.Name - 謎題列表</h2>
 
-@using (Html.BeginForm(nameof(TourController.Index), "Tour", new { area = "Admins" }, FormMethod.Get))
+@using (Html.BeginForm(nameof(PuzzleController.Index), "Tour", new { area = "Admins" }, FormMethod.Get))
 {
     <div class="form-inline">
-        <a href="@Url.Action("Index", "Home", new { area = "Admins" })" class="btn btn-warning">返回</a>
+        <a href="@Url.Action("Index", "Tour", new { area = "Admins" })" class="btn btn-warning">返回</a>
         &nbsp;&nbsp;
         關鍵字：
         <input type="text" name="keyword" value="@(Request["keyword"])" placeholder="關鍵字搜尋" class="form-control form-control-sm" />
         <button type="submit" class="btn btn-light btn-sm">開始搜尋</button>
-        <a href="@Url.Action(nameof(TourController.Index), new {area = "Admins"})" class="btn btn-light btn-sm">清除搜尋條件</a>
+        <a href="@Url.Action(nameof(PuzzleController.Index), new {area = "Admins"})" class="btn btn-light btn-sm">清除搜尋條件</a>
     </div>
 }
 
 <hr />
 
-<a href="" class="btn btn-success">新增</a>
+<a href="@Url.Action("Create",new {tourId = tour.Id})" class="btn btn-success">新增</a>
 
 <hr />
 
 <table class="table table-striped table-hover">
     <tr>
         <td>
-            Banner
+            Picture
         </td>
         <td>
-            @Html.SortLabel("名稱", nameof(Tour.Name), new { page = Request["page"], keyword = Request["keyword"] }, sort)
+            @Html.SortLabel("名稱", nameof(Puzzle.Name), new { page = Request["page"], keyword = Request["keyword"] }, sort)
         </td>
         <td></td>
     </tr>
@@ -52,15 +51,17 @@
     {
         <tr>
             <td>
-                <img src="@(item.Banner.StartsWith("http")?item.Banner:Url.Content(item.Banner))" alt="@item.Name" style="max-height: 200px;" />
+                @if (!item.Picture.IsNullOrWhiteSpace())
+                {
+                    <img src="@(item.Picture.StartsWith("http") ? item.Picture : Url.Content(item.Picture))" alt="@item.Name" style="max-height: 200px;" />
+                }
             </td>
             <td>
                 @item.Name
             </td>
 
             <td>
-                <a href="@Url.Action("Edit", new { id = item.Id })" class="btn btn-warning">編輯</a>
-                <a href="@Url.Action("Index","Puzzle", new {area="Admins", tourId = item.Id })" class="btn btn-info">謎題列表</a>
+                <a href="@Url.Action("Edit", new { tourId = tour.Id,puzzleId = item.Id})" class="btn btn-warning">編輯</a>
             </td>
         </tr>
     }

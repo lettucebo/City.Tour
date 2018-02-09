@@ -29,6 +29,7 @@ namespace City.Tour.Library.Models.CityTour
         public bool IsDelete { get; set; }
         public System.DateTime ModifyTime { get; set; }
         public string Info { get; set; }
+        public int Sort { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Puzzle> Puzzles { get; set; }

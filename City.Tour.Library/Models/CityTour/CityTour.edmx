@@ -12,6 +12,8 @@
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="CreateTime" Type="datetime" Nullable="false" />
           <Property Name="PuzzleId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
+          <Property Name="DeleteTime" Type="datetime" />
         </EntityType>
         <EntityType Name="Hints">
           <Key>
@@ -20,6 +22,8 @@
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="CreateTime" Type="datetime" Nullable="false" />
           <Property Name="PuzzleId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
+          <Property Name="ModifyTime" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Puzzles">
           <Key>
@@ -28,6 +32,12 @@
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="CreateTime" Type="datetime" Nullable="false" />
           <Property Name="TourId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Descript" Type="nvarchar(max)" />
+          <Property Name="Picture" Type="nvarchar(max)" />
+          <Property Name="Sort" Type="int" Nullable="false" />
+          <Property Name="ModifyTime" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Teams">
           <Key>
@@ -35,6 +45,8 @@
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="CreateTime" Type="datetime" Nullable="false" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
+          <Property Name="ModifyTime" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Tours">
           <Key>
@@ -49,6 +61,7 @@
           <Property Name="IsDelete" Type="bit" Nullable="false" />
           <Property Name="ModifyTime" Type="datetime" Nullable="false" />
           <Property Name="Info" Type="nvarchar(max)" />
+          <Property Name="Sort" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -62,7 +75,7 @@
           <Property Name="Email" Type="nvarchar" MaxLength="500" />
           <Property Name="Source" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="IsDelete" Type="bit" Nullable="false" />
-          <Property Name="DeleteTime" Type="datetime" />
+          <Property Name="ModifyTime" Type="datetime" Nullable="false" />
           <Property Name="IsAdmin" Type="bit" Nullable="false" />
         </EntityType>
         <Association Name="FK_Answers_Puzzles">
@@ -125,6 +138,26 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CityTourModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="CityTourEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Answers" EntityType="CityTourModel.Answer" />
+          <EntitySet Name="Hints" EntityType="CityTourModel.Hint" />
+          <EntitySet Name="Puzzles" EntityType="CityTourModel.Puzzle" />
+          <EntitySet Name="Teams" EntityType="CityTourModel.Team" />
+          <EntitySet Name="Tours" EntityType="CityTourModel.Tour" />
+          <EntitySet Name="Users" EntityType="CityTourModel.User" />
+          <AssociationSet Name="FK_Answers_Puzzles" Association="CityTourModel.FK_Answers_Puzzles">
+            <End Role="Puzzle" EntitySet="Puzzles" />
+            <End Role="Answer" EntitySet="Answers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Hints_Puzzles" Association="CityTourModel.FK_Hints_Puzzles">
+            <End Role="Puzzle" EntitySet="Puzzles" />
+            <End Role="Hint" EntitySet="Hints" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Puzzles_Tours" Association="CityTourModel.FK_Puzzles_Tours">
+            <End Role="Tour" EntitySet="Tours" />
+            <End Role="Puzzle" EntitySet="Puzzles" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="Answer">
           <Key>
             <PropertyRef Name="Id" />
@@ -132,7 +165,9 @@
           <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="PuzzleId" Type="Guid" Nullable="false" />
-          <NavigationProperty Name="Puzzle" Relationship="Self.FK_Answers_Puzzles" FromRole="Answers" ToRole="Puzzles" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
+          <Property Name="DeleteTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Puzzle" Relationship="CityTourModel.FK_Answers_Puzzles" FromRole="Answer" ToRole="Puzzle" />
         </EntityType>
         <EntityType Name="Hint">
           <Key>
@@ -141,7 +176,9 @@
           <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="PuzzleId" Type="Guid" Nullable="false" />
-          <NavigationProperty Name="Puzzle" Relationship="Self.FK_Hints_Puzzles" FromRole="Hints" ToRole="Puzzles" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
+          <Property Name="ModifyTime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Puzzle" Relationship="CityTourModel.FK_Hints_Puzzles" FromRole="Hint" ToRole="Puzzle" />
         </EntityType>
         <EntityType Name="Puzzle">
           <Key>
@@ -150,9 +187,24 @@
           <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="TourId" Type="Guid" Nullable="false" />
-          <NavigationProperty Name="Answers" Relationship="Self.FK_Answers_Puzzles" FromRole="Puzzles" ToRole="Answers" />
-          <NavigationProperty Name="Hints" Relationship="Self.FK_Hints_Puzzles" FromRole="Puzzles" ToRole="Hints" />
-          <NavigationProperty Name="Tour" Relationship="Self.FK_Puzzles_Tours" FromRole="Puzzles" ToRole="Tours" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Descript" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Picture" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Sort" Type="Int32" Nullable="false" />
+          <Property Name="ModifyTime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Answers" Relationship="CityTourModel.FK_Answers_Puzzles" FromRole="Puzzle" ToRole="Answer" />
+          <NavigationProperty Name="Hints" Relationship="CityTourModel.FK_Hints_Puzzles" FromRole="Puzzle" ToRole="Hint" />
+          <NavigationProperty Name="Tour" Relationship="CityTourModel.FK_Puzzles_Tours" FromRole="Puzzle" ToRole="Tour" />
+        </EntityType>
+        <EntityType Name="Team">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
+          <Property Name="ModifyTime" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="Tour">
           <Key>
@@ -160,77 +212,15 @@
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="Descript" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Banner" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="BannerThumb" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="IsDelete" Type="Boolean" Nullable="false" />
           <Property Name="ModifyTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Info" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Puzzles" Relationship="Self.FK_Puzzles_Tours" FromRole="Tours" ToRole="Puzzles" />
-        </EntityType>
-        <Association Name="FK_Answers_Puzzles">
-          <End Role="Puzzles" Type="Self.Puzzle" Multiplicity="1" />
-          <End Role="Answers" Type="Self.Answer" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Puzzles">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Answers">
-              <PropertyRef Name="PuzzleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Hints_Puzzles">
-          <End Role="Puzzles" Type="Self.Puzzle" Multiplicity="1" />
-          <End Role="Hints" Type="Self.Hint" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Puzzles">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Hints">
-              <PropertyRef Name="PuzzleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Puzzles_Tours">
-          <End Role="Tours" Type="Self.Tour" Multiplicity="1" />
-          <End Role="Puzzles" Type="Self.Puzzle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tours">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Puzzles">
-              <PropertyRef Name="TourId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityContainer Name="CityTourEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Answers" EntityType="Self.Answer" />
-          <EntitySet Name="Hints" EntityType="Self.Hint" />
-          <EntitySet Name="Puzzles" EntityType="Self.Puzzle" />
-          <EntitySet Name="Tours" EntityType="Self.Tour" />
-          <AssociationSet Name="FK_Answers_Puzzles" Association="Self.FK_Answers_Puzzles">
-            <End Role="Puzzles" EntitySet="Puzzles" />
-            <End Role="Answers" EntitySet="Answers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Hints_Puzzles" Association="Self.FK_Hints_Puzzles">
-            <End Role="Puzzles" EntitySet="Puzzles" />
-            <End Role="Hints" EntitySet="Hints" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Puzzles_Tours" Association="Self.FK_Puzzles_Tours">
-            <End Role="Tours" EntitySet="Tours" />
-            <End Role="Puzzles" EntitySet="Puzzles" />
-          </AssociationSet>
-          <EntitySet Name="Teams" EntityType="CityTourModel.Team" />
-          <EntitySet Name="Users" EntityType="CityTourModel.User" />
-        </EntityContainer>
-        <EntityType Name="Team">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Sort" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Puzzles" Relationship="CityTourModel.FK_Puzzles_Tours" FromRole="Tour" ToRole="Puzzle" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -244,9 +234,45 @@
           <Property Name="Email" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="Source" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsDelete" Type="Boolean" Nullable="false" />
-          <Property Name="DeleteTime" Type="DateTime" Precision="3" />
+          <Property Name="ModifyTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Answers_Puzzles">
+          <End Type="CityTourModel.Puzzle" Role="Puzzle" Multiplicity="1" />
+          <End Type="CityTourModel.Answer" Role="Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Puzzle">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Answer">
+              <PropertyRef Name="PuzzleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Hints_Puzzles">
+          <End Type="CityTourModel.Puzzle" Role="Puzzle" Multiplicity="1" />
+          <End Type="CityTourModel.Hint" Role="Hint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Puzzle">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Hint">
+              <PropertyRef Name="PuzzleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Puzzles_Tours">
+          <End Type="CityTourModel.Tour" Role="Tour" Multiplicity="1" />
+          <End Type="CityTourModel.Puzzle" Role="Puzzle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tour">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Puzzle">
+              <PropertyRef Name="TourId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -256,48 +282,61 @@
           <EntitySetMapping Name="Answers">
             <EntityTypeMapping TypeName="CityTourModel.Answer">
               <MappingFragment StoreEntitySet="Answers">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="DeleteTime" ColumnName="DeleteTime" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
                 <ScalarProperty Name="PuzzleId" ColumnName="PuzzleId" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Hints">
             <EntityTypeMapping TypeName="CityTourModel.Hint">
               <MappingFragment StoreEntitySet="Hints">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
                 <ScalarProperty Name="PuzzleId" ColumnName="PuzzleId" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Puzzles">
             <EntityTypeMapping TypeName="CityTourModel.Puzzle">
               <MappingFragment StoreEntitySet="Puzzles">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
-                <ScalarProperty Name="TourId" ColumnName="TourId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tours">
-            <EntityTypeMapping TypeName="CityTourModel.Tour">
-              <MappingFragment StoreEntitySet="Tours">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Descript" ColumnName="Descript" />
-                <ScalarProperty Name="Banner" ColumnName="Banner" />
-                <ScalarProperty Name="BannerThumb" ColumnName="BannerThumb" />
-                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
                 <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
-                <ScalarProperty Name="Info" ColumnName="Info" />
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
+                <ScalarProperty Name="Picture" ColumnName="Picture" />
+                <ScalarProperty Name="Descript" ColumnName="Descript" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="TourId" ColumnName="TourId" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Teams">
             <EntityTypeMapping TypeName="CityTourModel.Team">
               <MappingFragment StoreEntitySet="Teams">
+                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tours">
+            <EntityTypeMapping TypeName="CityTourModel.Tour">
+              <MappingFragment StoreEntitySet="Tours">
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
+                <ScalarProperty Name="Info" ColumnName="Info" />
+                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="BannerThumb" ColumnName="BannerThumb" />
+                <ScalarProperty Name="Banner" ColumnName="Banner" />
+                <ScalarProperty Name="Descript" ColumnName="Descript" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -307,7 +346,7 @@
             <EntityTypeMapping TypeName="CityTourModel.User">
               <MappingFragment StoreEntitySet="Users">
                 <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
-                <ScalarProperty Name="DeleteTime" ColumnName="DeleteTime" />
+                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
                 <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
                 <ScalarProperty Name="Source" ColumnName="Source" />
                 <ScalarProperty Name="Email" ColumnName="Email" />

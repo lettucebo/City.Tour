@@ -65,6 +65,9 @@
     <Reference Include="Ci.Sequential, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Ci.Sequential.2.0.0\lib\Ci.Sequential.dll</HintPath>
     </Reference>
+    <Reference Include="Ci.Upload, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ci.Upload.3.0.1\lib\net452\Ci.Upload.dll</HintPath>
+    </Reference>
     <Reference Include="Creatidea.Library.Configs, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Creatidea.Library.Configs.1.0.4\lib\Creatidea.Library.Configs.dll</HintPath>
     </Reference>
@@ -247,6 +250,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Admins\AdminsAreaRegistration.cs" />
+    <Compile Include="Areas\Admins\Controllers\PuzzleController.cs" />
     <Compile Include="Areas\Admins\Controllers\TourController.cs" />
     <Compile Include="Base\BaseAdminController.cs" />
     <Compile Include="Base\BaseController.cs" />
@@ -365,6 +369,10 @@
     <Content Include="Areas\Admins\Views\Tour\Edit.cshtml" />
     <Content Include="App_Data\CiConfig\CiConfig.json" />
     <Content Include="Connected Services\Application Insights\ConnectedService.json" />
+    <Content Include="Areas\Admins\Views\Puzzle\Index.cshtml" />
+    <Content Include="Areas\Admins\Views\Puzzle\Create.cshtml" />
+    <Content Include="App_Data\CiConfig\CiFile.json" />
+    <Content Include="Areas\Admins\Views\Puzzle\Edit.cshtml" />
     <None Include="Properties\PublishProfiles\CityTourWeb - Web Deploy.pubxml" />
     <Content Include="Scripts\axios.min.map" />
     <Content Include="Scripts\axios.map" />
