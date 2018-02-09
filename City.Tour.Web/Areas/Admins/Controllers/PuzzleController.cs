@@ -11,6 +11,7 @@ using Ci.Upload.Extensions;
 using City.Tour.Library.Models.CityTour;
 using City.Tour.Service;
 using City.Tour.Web.Base;
+using DateTime = System.DateTime;
 
 namespace City.Tour.Web.Areas.Admins.Controllers
 {
@@ -59,8 +60,15 @@ namespace City.Tour.Web.Areas.Admins.Controllers
                 return View(model);
             }
 
+            if (!image.IsNullOrEmpty())
+            {
+                var file = image.SaveAsLocal("Images/Puzzle");
+                model.Picture = file.VirtualPath;
+            }
+
             model.Id = Ci.Sequential.Guid.Create();
             model.CreateTime = DateTime.Now;
+            model.ModifyTime = DateTime.Now;
             model.TourId = tourId;
 
             puzzleService.Create(model);
@@ -68,14 +76,14 @@ namespace City.Tour.Web.Areas.Admins.Controllers
             return RedirectToAction("Index", "Puzzle", new { tourId });
         }
 
-        public ActionResult Edit(Guid tourId, Guid puzzleId)
+        public ActionResult Edit(Guid puzzleId)
         {
-            var tour = tourService.GetById(tourId);
-            if (tour == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-
             var data = puzzleService.GetById(puzzleId);
             if (data == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var tour = tourService.GetById(data.TourId);
+            if (tour == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             ViewBag.tour = tour;
@@ -86,9 +94,9 @@ namespace City.Tour.Web.Areas.Admins.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]
-        public ActionResult Edit(Guid tourId, Guid puzzleId, Puzzle model, HttpPostedFileBase image)
+        public ActionResult Edit(Guid puzzleId, Puzzle model, HttpPostedFileBase image)
         {
-            var tour = tourService.GetById(tourId);
+            var tour = tourService.GetById(model.TourId);
             if (tour == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
@@ -108,8 +116,7 @@ namespace City.Tour.Web.Areas.Admins.Controllers
 
             puzzleService.Update(model);
             this.SetAlert($"謎題：{model.Name}，更新成功！");
-            return RedirectToAction("Index", "Puzzle", new { tourId });
-            return View(model);
+            return RedirectToAction("Index", "Puzzle", new { tourId = model.TourId });
         }
     }
 }

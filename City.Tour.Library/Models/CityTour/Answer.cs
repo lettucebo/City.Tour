@@ -18,7 +18,10 @@ namespace City.Tour.Library.Models.CityTour
         public System.DateTime CreateTime { get; set; }
         public System.Guid PuzzleId { get; set; }
         public bool IsDelete { get; set; }
-        public Nullable<System.DateTime> DeleteTime { get; set; }
+        public System.DateTime ModifyTime { get; set; }
+        public string Text { get; set; }
+        public bool IsCorrectAnswer { get; set; }
+        public string ReplyMessage { get; set; }
     
         public virtual Puzzle Puzzle { get; set; }
     }

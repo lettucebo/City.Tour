@@ -1,0 +1,58 @@
+﻿@using Ci.Extension
+@using City.Tour.Library.Models.CityTour
+@using City.Tour.Web.Areas.Admins.Controllers
+@model City.Tour.Library.Models.CityTour.Answer
+@{
+    ViewBag.Title = "Edit";
+    Puzzle puzzle = ViewBag.puzzle;
+}
+
+<h2>@puzzle.Name - 新增答案</h2>
+
+<a href="@Url.Action("Index", "Answer", new { area = "Admins",tourId=puzzle.TourId,puzzleId = puzzle.Id })" class="btn btn-warning">返回</a>
+
+<hr />
+
+<div class="card">
+    <div class="card-body">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group row">
+                <label class="col-2 col-form-label">
+                    答案
+                </label>
+                <div class="col-md-10">
+                    <input type="text" name="@nameof(Answer.Text)" value="" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-2 col-form-label">
+                    觸發回復訊息
+                </label>
+                <div class="col-md-10">
+                    <textarea name="@nameof(Answer.ReplyMessage)" rows="10" class="form-control"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-2 col-form-label">
+                    是否為正確答案
+                </label>
+                <div class="col-md-10">
+                    <input type="checkbox" name="@nameof(Answer.IsCorrectAnswer)" value="true" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-10">
+                    <input type="submit" value="儲存" class="btn btn-primary" />
+                </div>
+            </div>
+        }
+    </div>
+</div>
+

@@ -1,0 +1,66 @@
+﻿@using Ci.Extension
+@using Ci.Mvc.Sort
+@using Ci.Mvc.Sort.Models
+@using City.Tour.Library.Models.CityTour
+@using City.Tour.Web.Areas.Admins.Controllers
+@using X.PagedList
+@using X.PagedList.Mvc
+@using X.PagedList.Mvc.Bootstrap4
+@model IEnumerable<City.Tour.Library.Models.CityTour.Answer>
+@{
+    Layout = "~/Areas/Admins/Views/Shared/_Layout.cshtml";
+    SortOrder sort = ViewBag.sort ?? new SortOrder();
+    Puzzle puzzle = ViewBag.puzzle;
+}
+
+@section contents{
+    <link href="~/Content/bootstrap-product.css" rel="stylesheet" />
+}
+
+<h2>@puzzle.Name - 答案列表</h2>
+
+@using (Html.BeginForm(nameof(AnswerController.Index), "Tour", new { area = "Admins" }, FormMethod.Get))
+{
+    <div class="form-inline">
+        <a href="@Url.Action("Index", "Puzzle", new { area = "Admins",tourId = puzzle.TourId,puzzleId= puzzle.Id })" class="btn btn-warning">返回</a>
+        &nbsp;&nbsp;
+        關鍵字：
+        <input type="text" name="keyword" value="@(Request["keyword"])" placeholder="關鍵字搜尋" class="form-control form-control-sm" />
+        <button type="submit" class="btn btn-light btn-sm">開始搜尋</button>
+        <a href="@Url.Action(nameof(AnswerController.Index), new {area = "Admins"})" class="btn btn-light btn-sm">清除搜尋條件</a>
+    </div>
+}
+
+<hr />
+
+<a href="@Url.Action("Create",new {puzzleId = puzzle.Id})" class="btn btn-success">新增</a>
+
+<hr />
+
+<table class="table table-striped table-hover">
+    <tr>
+        <td>
+            @Html.SortLabel("答案", nameof(Answer.Text), new { page = Request["page"], keyword = Request["keyword"] }, sort)
+        </td>
+        <td>
+            @Html.SortLabel("是否為正確答案", nameof(Answer.IsCorrectAnswer), new { page = Request["page"], keyword = Request["keyword"] }, sort)
+        </td>
+        <td></td>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.Text
+            </td>
+            <td>
+                @(item.IsCorrectAnswer ? "是" : "否")
+            </td>
+            <td>
+                <a href="@Url.Action("Edit", new {answerId = item.Id})" class="btn btn-warning">編輯</a>
+            </td>
+        </tr>
+    }
+</table>
+
+@Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page, floor = Request["floor"], keyword = Request["keyword"], key = sort?.Key, order = sort?.Order }), Bootstrap4PagedListRenderOptions.ClassicPlusFirstAndLast)

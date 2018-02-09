@@ -98,6 +98,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnswerService.cs" />
     <Compile Include="Base\BaseService.cs" />
     <Compile Include="IdentityService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

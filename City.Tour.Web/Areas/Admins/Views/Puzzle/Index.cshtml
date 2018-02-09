@@ -22,7 +22,7 @@
 @using (Html.BeginForm(nameof(PuzzleController.Index), "Tour", new { area = "Admins" }, FormMethod.Get))
 {
     <div class="form-inline">
-        <a href="@Url.Action("Index", "Tour", new { area = "Admins" })" class="btn btn-warning">返回</a>
+        <a href="@Url.Action("Index", "Tour", new {area = "Admins"})" class="btn btn-warning">返回</a>
         &nbsp;&nbsp;
         關鍵字：
         <input type="text" name="keyword" value="@(Request["keyword"])" placeholder="關鍵字搜尋" class="form-control form-control-sm" />
@@ -33,7 +33,7 @@
 
 <hr />
 
-<a href="@Url.Action("Create",new {tourId = tour.Id})" class="btn btn-success">新增</a>
+<a href="@Url.Action("Create", new {tourId = tour.Id})" class="btn btn-success">新增</a>
 
 <hr />
 
@@ -44,6 +44,9 @@
         </td>
         <td>
             @Html.SortLabel("名稱", nameof(Puzzle.Name), new { page = Request["page"], keyword = Request["keyword"] }, sort)
+        </td>
+        <td>
+            @Html.SortLabel("排序", nameof(Puzzle.Sort), new { page = Request["page"], keyword = Request["keyword"] }, sort)
         </td>
         <td></td>
     </tr>
@@ -59,9 +62,13 @@
             <td>
                 @item.Name
             </td>
-
             <td>
-                <a href="@Url.Action("Edit", new { tourId = tour.Id,puzzleId = item.Id})" class="btn btn-warning">編輯</a>
+                @item.Sort
+            </td>
+            <td>
+                <a href="@Url.Action("Edit", new { puzzleId = item.Id})" class="btn btn-warning">編輯</a>
+                <a href="@Url.Action("Index", "Answer", new { puzzleId = item.Id})" class="btn btn-info">答案列表</a>
+                <a href="@Url.Action("Index", "Hint", new { puzzleId = item.Id})" class="btn btn-info">提示列表</a>
             </td>
         </tr>
     }

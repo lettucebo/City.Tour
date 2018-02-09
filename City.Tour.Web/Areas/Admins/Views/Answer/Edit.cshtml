@@ -1,58 +1,50 @@
 ﻿@using Ci.Extension
 @using City.Tour.Library.Models.CityTour
 @using City.Tour.Web.Areas.Admins.Controllers
-@model City.Tour.Library.Models.CityTour.Puzzle
+@model City.Tour.Library.Models.CityTour.Answer
 @{
     ViewBag.Title = "Edit";
-    Tour tour = ViewBag.tour;
+    Puzzle puzzle = ViewBag.puzzle;
 }
 
-<h2>@tour.Name - 新增謎題</h2>
+<h2>@puzzle.Name - 編輯答案</h2>
 
-<a href="@Url.Action("Index", "Puzzle", new { area = "Admins",tourId=Request["tourId"],puzzleId = Request["puzzleId"] })" class="btn btn-warning">返回</a>
+<a href="@Url.Action("Index", "Answer", new {area = "Admins", puzzleId = puzzle.Id})" class="btn btn-warning">返回</a>
 
 <hr />
-
 <div class="card">
     <div class="card-body">
-        @using (Html.BeginForm(nameof(PuzzleController.Create), "Puzzle", new { area = "Admins", tourId = Request["tourId"], puzzleId = Request["puzzleId"] }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+        @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(x => x.Id)
+            @Html.HiddenFor(x => x.PuzzleId)
 
             <div class="form-group row">
                 <label class="col-2 col-form-label">
                     名稱
                 </label>
                 <div class="col-md-10">
-                    <input type="text" name="@nameof(Puzzle.Name)" value="" class="form-control" />
+                    <input type="text" name="@nameof(Answer.Text)" value="@Model.Text" class="form-control" />
                 </div>
             </div>
 
             <div class="form-group row">
                 <label class="col-2 col-form-label">
-                    排序
+                    觸發回復訊息
                 </label>
                 <div class="col-md-10">
-                    <input type="number" min="0" name="@nameof(Puzzle.Sort)" value="0" class="form-control" />
+                    <textarea name="@nameof(Answer.ReplyMessage)" rows="10" class="form-control">@Model.ReplyMessage</textarea>
                 </div>
             </div>
 
             <div class="form-group row">
                 <label class="col-2 col-form-label">
-                    描述
+                    是否為正確答案
                 </label>
                 <div class="col-md-10">
-                    <textarea name="@nameof(Puzzle.Descript)" rows="10" class="form-control"></textarea>
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label class="col-2 col-form-label">
-                    圖片
-                </label>
-                <div class="col-md-10">
-                    <input type="file" name="image" value="" class="form-control" />
+                    @Html.CheckBoxFor(x => x.IsCorrectAnswer, new { @class = "form-control" })
                 </div>
             </div>
 
@@ -64,4 +56,3 @@
         }
     </div>
 </div>
-

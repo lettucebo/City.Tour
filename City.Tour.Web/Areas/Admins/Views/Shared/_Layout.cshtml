@@ -1,4 +1,5 @@
-﻿@using City.Tour.Web.Controllers
+﻿@using Ci.Mvc.Alert
+@using City.Tour.Web.Controllers
 <!doctype html>
 <html>
 <head>
@@ -24,6 +25,10 @@
         .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
             background-color: #A4A4A4;
         }
+
+        input[type="checkbox"] {
+            zoom: 2;
+        }
     </style>
 
     @RenderSection("contents", required: false)
@@ -48,13 +53,19 @@
     </div>
 
     <hr />
-    <footer>
-        <p>&copy; @DateTime.Now.Year - Money Yu</p>
-    </footer>
 
+    <div class="container">
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Money Yu</p>
+        </footer>
+    </div>
     <script src="//code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js" integrity="sha384-feJI7QwhOS+hwpX2zkaeJQjeiwlhOP+SdQDqhgvvo1DsjtiSQByFdThsxO669S2D" crossorigin="anonymous"></script>
 
+    <script src="~/Scripts/bootbox.min.js"></script>
+
     @RenderSection("scripts", required: false)
+
+    @Html.ShowAlert()
 </body>
 </html>

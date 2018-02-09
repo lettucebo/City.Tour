@@ -25,11 +25,11 @@ namespace City.Tour.Library.Models.CityTour
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Answer> Answers { get; set; }
         public virtual DbSet<Hint> Hints { get; set; }
-        public virtual DbSet<Puzzle> Puzzles { get; set; }
         public virtual DbSet<Team> Teams { get; set; }
         public virtual DbSet<Tour> Tours { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Answer> Answers { get; set; }
+        public virtual DbSet<Puzzle> Puzzles { get; set; }
     }
 }
