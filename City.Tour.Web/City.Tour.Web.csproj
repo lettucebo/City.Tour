@@ -248,6 +248,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Admins\AdminsAreaRegistration.cs" />
     <Compile Include="Areas\Admins\Controllers\TourController.cs" />
+    <Compile Include="Base\BaseAdminController.cs" />
     <Compile Include="Base\BaseController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\TourController.cs" />
@@ -439,6 +440,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admins\Models\" />
+    <Folder Include="Views\BaseAdmin\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Game\" />
   </ItemGroup>

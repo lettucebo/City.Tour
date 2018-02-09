@@ -43,5 +43,15 @@ namespace City.Tour.Web.Controllers
             var retrnUrl = Url.Action("Map", "Home", null, Request.Url.Scheme);
             return Json(retrnUrl);
         }
+
+        public ActionResult Logoff()
+        {
+            var ctx = Request.GetOwinContext();
+            var authManager = ctx.Authentication;
+
+            IdentityService.Logoff(authManager);
+
+            return RedirectToAction(nameof(HomeController.Index), "Home", new { area = "" });
+        }
     }
 }

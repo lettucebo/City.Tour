@@ -5,10 +5,11 @@ using System.Web;
 using System.Web.Mvc;
 using Ci.Mvc.Sort.Models;
 using City.Tour.Service;
+using City.Tour.Web.Base;
 
 namespace City.Tour.Web.Areas.Admins.Controllers
 {
-    public class TourController : Controller
+    public class TourController : BaseAdminController
     {
         private TourService tourService = new TourService();
 

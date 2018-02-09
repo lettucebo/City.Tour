@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using City.Tour.Library.Models.CityTour;
 using City.Tour.Service.Base;
 using Microsoft.Owin.Security;
@@ -28,7 +29,7 @@ namespace City.Tour.Service
                     new Claim("Picture", user.Picture),
                     new Claim("Source", user.Source),
                     new Claim("IsAdmin", user.IsAdmin.ToString())
-                },"CITYTOUR");
+                }, "CITYTOUR");
 
 
             authenticationManager.SignIn(
@@ -36,5 +37,14 @@ namespace City.Tour.Service
                 identity);
         }
 
+        /// <summary>
+        /// 登出所有相關INXGPS站台
+        /// </summary>
+        /// <param name="authManager"></param>
+        public static void Logoff(IAuthenticationManager authManager)
+        {
+            authManager.SignOut("CITYTOUR");
+            HttpContext.Current.Session.Abandon();
+        }
     }
 }
