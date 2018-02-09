@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="CityTourModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CityTourModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Answers">
           <Key>
             <PropertyRef Name="Id" />
@@ -29,6 +29,13 @@
           <Property Name="CreateTime" Type="datetime" Nullable="false" />
           <Property Name="TourId" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
+        <EntityType Name="Teams">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="Tours">
           <Key>
             <PropertyRef Name="Id" />
@@ -42,6 +49,21 @@
           <Property Name="IsDelete" Type="bit" Nullable="false" />
           <Property Name="ModifyTime" Type="datetime" Nullable="false" />
           <Property Name="Info" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" Nullable="false" />
+          <Property Name="ProfileId" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Picture" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="500" />
+          <Property Name="Source" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
+          <Property Name="DeleteTime" Type="datetime" />
+          <Property Name="IsAdmin" Type="bit" Nullable="false" />
         </EntityType>
         <Association Name="FK_Answers_Puzzles">
           <End Role="Puzzles" Type="Self.Puzzles" Multiplicity="1" />
@@ -83,7 +105,9 @@
           <EntitySet Name="Answers" EntityType="Self.Answers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Hints" EntityType="Self.Hints" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Puzzles" EntityType="Self.Puzzles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Teams" EntityType="Self.Teams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tours" EntityType="Self.Tours" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Answers_Puzzles" Association="Self.FK_Answers_Puzzles">
             <End Role="Puzzles" EntitySet="Puzzles" />
             <End Role="Answers" EntitySet="Answers" />
@@ -97,8 +121,7 @@
             <End Role="Puzzles" EntitySet="Puzzles" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CityTourModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -199,7 +222,31 @@
             <End Role="Tours" EntitySet="Tours" />
             <End Role="Puzzles" EntitySet="Puzzles" />
           </AssociationSet>
+          <EntitySet Name="Teams" EntityType="CityTourModel.Team" />
+          <EntitySet Name="Users" EntityType="CityTourModel.User" />
         </EntityContainer>
+        <EntityType Name="Team">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ProfileId" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Picture" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Source" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
+          <Property Name="DeleteTime" Type="DateTime" Precision="3" />
+          <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -245,6 +292,30 @@
                 <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
                 <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
                 <ScalarProperty Name="Info" ColumnName="Info" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teams">
+            <EntityTypeMapping TypeName="CityTourModel.Team">
+              <MappingFragment StoreEntitySet="Teams">
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="CityTourModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
+                <ScalarProperty Name="DeleteTime" ColumnName="DeleteTime" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="Source" ColumnName="Source" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Picture" ColumnName="Picture" />
+                <ScalarProperty Name="ProfileId" ColumnName="ProfileId" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

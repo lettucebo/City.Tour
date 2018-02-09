@@ -1,4 +1,5 @@
-﻿@using City.Tour.Web.Controllers
+﻿@using Ci.Mvc.Alert
+@using City.Tour.Web.Controllers
 <!doctype html>
 <html>
 <head>
@@ -8,6 +9,7 @@
     <title>City.Tour</title>
 
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="~/Content/bootstrap-product.css" rel="stylesheet" />
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
@@ -38,7 +40,8 @@
             <a class="py-2 d-none d-md-inline-block" href="@Url.Action(nameof(HomeController.Story),"Home",new {area=""})">故事</a>
             <a class="py-2 d-none d-md-inline-block" href="@Url.Action(nameof(HomeController.Map),"Home",new {area=""})">地圖</a>
             <a class="py-2 d-none d-md-inline-block" href="@Url.Action(nameof(HomeController.Tour),"Home",new {area=""})">遊戲</a>
-            <a class="py-2 d-none d-md-inline-block" href="#">註冊 / 登入</a>
+            @Html.Partial("_LoginPartial")
+
         </div>
     </nav>
 
@@ -54,6 +57,10 @@
     <script src="//code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js" integrity="sha384-feJI7QwhOS+hwpX2zkaeJQjeiwlhOP+SdQDqhgvvo1DsjtiSQByFdThsxO669S2D" crossorigin="anonymous"></script>
 
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.js" integrity="sha256-tcqPYPyxU+Fsv5sVdvnxLYJ7Jq9wWpi4twZbtZ0ubY8=" crossorigin="anonymous"></script>
+
     @RenderSection("scripts", required: false)
+
+    @Html.ShowAlert()
 </body>
 </html>

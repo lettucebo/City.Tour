@@ -8,7 +8,7 @@ using Ci.Mvc.Sort;
 using Ci.Mvc.Sort.Enums;
 using Ci.Mvc.Sort.Models;
 using City.Tour.Library.Models.CityTour;
-using City.Tour.Service.Bases;
+using City.Tour.Service.Base;
 using X.PagedList;
 
 namespace City.Tour.Service

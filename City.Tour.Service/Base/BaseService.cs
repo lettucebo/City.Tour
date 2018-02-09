@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Configuration;
 
-namespace City.Tour.Service.Bases
+namespace City.Tour.Service.Base
 {
     public class BaseService
     {

@@ -1,22 +1,17 @@
-﻿@using Microsoft.AspNet.Identity
+﻿@using System.Security.Claims
+@using City.Tour.Web.Controllers
+@using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated)
 {
-    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-    {
-    @Html.AntiForgeryToken()
-
-    <ul class="nav navbar-nav navbar-right">
-        <li>
-            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-        </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-    </ul>
-    }
+    var identity = (ClaimsIdentity)User.Identity;
+    IEnumerable<Claim> claims = identity.Claims;
+    
+    <a class="py-2 d-none d-md-inline-block" href="#">
+        <img src="@($"https://graph.facebook.com/{(claims.First(x=>x.Type=="ProfileId").Value)}/picture?type=small")" style="max-height: 50px;" />
+        @User.Identity.Name 登出
+    </a>
 }
 else
 {
-    <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
-    </ul>
+    <a class="py-2 d-none d-md-inline-block" href="@Url.Action(nameof(AccountController.Login),"Account",new{area=""})">註冊 / 登入</a>
 }
