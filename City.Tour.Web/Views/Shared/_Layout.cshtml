@@ -1,0 +1,57 @@
+﻿@using City.Tour.Web.Controllers
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>City.Tour</title>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <style>
+        @@import url(//fonts.googleapis.com/earlyaccess/cwtexhei.css);
+
+        body {
+            font-family: 'cwTeXHei', LiHei Pro, Heiti TC, Microsoft JhengHei, Arial, Helvetica, sans-serif;
+        }
+
+        .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+            background-color: #A4A4A4;
+        }
+    </style>
+
+    @RenderSection("contents", required: false)
+</head>
+
+<body>
+    <nav class="site-header sticky-top py-1">
+        <div class="container d-flex flex-column flex-md-row justify-content-between">
+            <a class="py-2" href="#">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block mx-auto"><circle cx="12" cy="12" r="10"></circle><line x1="14.31" y1="8" x2="20.05" y2="17.94"></line><line x1="9.69" y1="8" x2="21.17" y2="8"></line><line x1="7.38" y1="12" x2="13.12" y2="2.06"></line><line x1="9.69" y1="16" x2="3.95" y2="6.06"></line><line x1="14.31" y1="16" x2="2.83" y2="16"></line><line x1="16.62" y1="12" x2="10.88" y2="21.94"></line></svg>
+            </a>
+            <a class="py-2 d-none d-md-inline-block" href="@Url.Action(nameof(HomeController.Index),"Home",new {area=""})">首頁</a>
+            <a class="py-2 d-none d-md-inline-block" href="@Url.Action(nameof(HomeController.Story),"Home",new {area=""})">故事</a>
+            <a class="py-2 d-none d-md-inline-block" href="@Url.Action(nameof(HomeController.Map),"Home",new {area=""})">地圖</a>
+            <a class="py-2 d-none d-md-inline-block" href="@Url.Action(nameof(HomeController.Tour),"Home",new {area=""})">遊戲</a>
+            <a class="py-2 d-none d-md-inline-block" href="#">註冊 / 登入</a>
+        </div>
+    </nav>
+
+    <div id="body">
+        @RenderBody()
+    </div>
+
+    <hr />
+    <footer>
+        <p>&copy; @DateTime.Now.Year - Money Yu</p>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js" integrity="sha384-feJI7QwhOS+hwpX2zkaeJQjeiwlhOP+SdQDqhgvvo1DsjtiSQByFdThsxO669S2D" crossorigin="anonymous"></script>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

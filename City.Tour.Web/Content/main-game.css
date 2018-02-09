@@ -1,0 +1,67 @@
+.body_bg .content .scrollbar-inner{
+	overflow: auto;
+}
+
+.body_bg .content .main-content-pic{
+	width: 100%;
+}
+
+.main-footer .main-pic-frame{
+}
+
+.content .main-pic-frame .main-pic-egg{
+	width: 100%;
+}
+.main-footer .main-input-frame{
+	width: 100%;
+    z-index: 2;
+    position: relative;
+    bottom: -20px;
+}
+
+.main-footer .main-input-frame .down{
+	bottom: -5px;
+    position: relative;
+}
+
+.main-footer .main-story-logo{
+	z-index: 2;
+    position: absolute;
+    bottom: 0px;
+    height: 75px;
+    right: 0px;
+}
+
+.main-footer .main-input-frame .main-input-submit{
+	width: 60px;
+	margin: 0 auto;
+    display: block;
+}
+
+.main-footer .main-input-frame .main-input-pic{
+	width: 60%;
+	margin: 0 auto;
+    display: block;
+}
+
+.dialog{
+	position: fixed;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 100;
+}
+
+.fail-dialog .dialog-bg, .success-dialog .dialog-bg{
+	margin: 50% auto;
+    height: 164px;
+    display: block;
+	/*background-image: url('');*/
+}
+
+.fail-dialog .dialog-msg, .success-dialog .dialog-msg{
+	margin: 50px 0;
+    width: 100%;
+    position: fixed;
+    text-align: center;
+}

@@ -1,0 +1,56 @@
+﻿@using City.Tour.Library.Models.CityTour
+@model City.Tour.Library.Models.CityTour.Tour
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>編輯導覽</h2>
+
+<div class="card">
+    <div class="card-body">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(x => x.Id)
+
+            <div class="form-group row">
+                <label class="col-2 col-form-label">
+                    名稱
+                </label>
+                <div class="col-md-10">
+                    <input type="text" name="@nameof(Tour.Name)" value="@Model.Name" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-2 col-form-label">
+                    資訊
+                </label>
+                <div class="col-md-10">
+                    <textarea name="@nameof(Tour.Info)" rows="10" class="form-control">@Model.Info</textarea>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-2 col-form-label">
+                    描述
+                </label>
+                <div class="col-md-10">
+                    <textarea name="@nameof(Tour.Descript)" rows="10" class="form-control">@Model.Descript</textarea>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-2 col-form-label">
+                    Banner
+                </label>
+                <div class="col-md-10">
+                    <input type="file" name="image" value="" class="form-control" />
+                    @(Model.Banner.StartsWith("http") ? Model.Banner : Url.Content(Model.Banner))
+                </div>
+            </div>
+        }
+    </div>
+</div>
+

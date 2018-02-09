@@ -1,0 +1,36 @@
+.body_bg .content .map-content-pic{
+	width: 100%;
+}
+
+.main-footer .map-pic-frame{
+}
+
+.main-footer .map-pic-frame .map-pic{
+	width: 85%;
+    position: absolute;
+    right: 0;
+    bottom: 0px;
+}
+
+.main-footer .map-input-frame{
+	width: 100%;
+    z-index: 2;
+    position: absolute;
+    bottom: 15px;
+    right: 20px;
+}
+
+.main-footer .map-input-frame .map-input-submit, .main-footer .map-input-frame .map-input-pic{
+	float: right;
+	position: relative;
+}
+
+.main-footer .map-input-frame .map-input-submit{
+	width: 50px;
+	top: -2px;
+}
+
+.main-footer .map-input-frame .map-input-pic{
+	width: 60%;
+	right: 5px;
+}

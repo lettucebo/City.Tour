@@ -1,0 +1,43 @@
+.main-timer{
+    overflow: hidden;
+    width: 170px;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+.time-frame{
+	width: 100%;
+	background-image: url('/assets/imgs/main-timer.png');
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+
+.main-timer .msec, .main-timer .min, .main-timer .sec{
+	height: 100%;
+    width: 50px;
+    overflow: hidden;
+    display: inline-block;
+    margin: 8px 0 3px 0;
+}
+
+.main-timer .min{
+	margin-left: 9px;
+	
+}
+
+.main-timer .min{
+}
+
+.main-timer .msec{
+    margin-right: 0;	
+}
+
+.main-timer .first, .main-timer .last{
+	background-image: url(/assets/imgs/main-timer-number.png);
+    width: 16px;
+    min-height: 25px;
+    background-size: cover;
+    display: inline-block;
+    margin: 2px;
+    background-position-y: 0;
+}
