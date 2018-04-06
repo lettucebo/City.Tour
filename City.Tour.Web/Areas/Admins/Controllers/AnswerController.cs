@@ -51,7 +51,7 @@ namespace City.Tour.Web.Areas.Admins.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             ViewBag.puzzle = puzzle;
 
-            if (model.Text.IsNullOrWhiteSpace())
+            if (model.Content.IsNullOrWhiteSpace())
             {
                 this.SetAlert("答案不可為空！");
                 return View(model);
@@ -61,11 +61,11 @@ namespace City.Tour.Web.Areas.Admins.Controllers
             model.CreateTime = DateTime.Now;
             model.ModifyTime = DateTime.Now;
             model.PuzzleId = puzzleId;
-            model.Text = model.Text.ToLower().TrimStart(' ').TrimEnd(' ');
+            model.Content = model.Content.ToLower().TrimStart(' ').TrimEnd(' ');
 
             answerService.Create(model);
 
-            this.SetAlert($"答案：{model.Text}，新增成功！");
+            this.SetAlert($"答案：{model.Content}，新增成功！");
             return RedirectToAction("Index", "Answer", new { tourId = puzzle.TourId, puzzleId = puzzle.Id });
         }
 
@@ -93,16 +93,16 @@ namespace City.Tour.Web.Areas.Admins.Controllers
             if (puzzle == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            if (model.Text.IsNullOrWhiteSpace())
+            if (model.Content.IsNullOrWhiteSpace())
             {
                 this.SetAlert("答案不可為空！");
                 return View(model);
             }
 
-            model.Text = model.Text.ToLower().TrimStart(' ').TrimEnd(' ');
+            model.Content = model.Content.ToLower().TrimStart(' ').TrimEnd(' ');
             answerService.Update(model);
 
-            this.SetAlert($"答案：{model.Text}，更新成功！");
+            this.SetAlert($"答案：{model.Content}，更新成功！");
             return RedirectToAction("Index", "Answer", new { puzzleId = puzzle.Id });
         }
     }

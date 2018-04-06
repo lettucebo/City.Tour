@@ -28,6 +28,7 @@ namespace City.Tour.Service
                     new Claim("ProfileId", user.ProfileId),
                     new Claim("Picture", user.Picture),
                     new Claim("Source", user.Source),
+                    new Claim("TeamId", user.TeamId.ToString()),
                     new Claim("IsAdmin", user.IsAdmin.ToString())
                 }, "CITYTOUR");
 

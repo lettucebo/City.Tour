@@ -14,9 +14,21 @@ namespace City.Tour.Library.Models.CityTour
     
     public partial class Team
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Team()
+        {
+            this.Users = new HashSet<User>();
+        }
+    
         public System.Guid Id { get; set; }
+        public string Name { get; set; }
         public System.DateTime CreateTime { get; set; }
-        public bool IsDelete { get; set; }
-        public System.DateTime ModifyTime { get; set; }
+        public string InviteCode { get; set; }
+        public System.Guid TourId { get; set; }
+        public Nullable<System.Guid> CurrentPuzzle { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<User> Users { get; set; }
+        public virtual Tour Tour { get; set; }
     }
 }

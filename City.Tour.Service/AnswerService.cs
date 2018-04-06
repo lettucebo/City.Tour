@@ -39,7 +39,7 @@ namespace City.Tour.Service
 
             if (!keyword.IsNullOrWhiteSpace())
             {
-                query = query.Where(x => x.Text.Contains(keyword));
+                query = query.Where(x => x.Content.Contains(keyword));
             }
 
             if (sort == null || sort.Key.IsNullOrWhiteSpace())
@@ -69,7 +69,7 @@ namespace City.Tour.Service
             var data = GetById(model.Id);
             if (data != null)
             {
-                data.Text = model.Text;
+                data.Content = model.Content;
                 data.IsCorrectAnswer = model.IsCorrectAnswer;
                 data.ReplyMessage = model.ReplyMessage;
 

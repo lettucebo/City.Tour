@@ -17,9 +17,9 @@ namespace City.Tour.Library.Models.CityTour
         public System.Guid Id { get; set; }
         public System.DateTime CreateTime { get; set; }
         public System.Guid PuzzleId { get; set; }
-        public bool IsDelete { get; set; }
         public System.DateTime ModifyTime { get; set; }
-        public string Text { get; set; }
+        public bool IsDelete { get; set; }
+        public string Content { get; set; }
         public bool IsCorrectAnswer { get; set; }
         public string ReplyMessage { get; set; }
     

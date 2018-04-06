@@ -1,0 +1,77 @@
+﻿@model City.Tour.Library.Models.CityTour.Tour
+@{
+    Layout = "";
+    Guid currentPuzzle = ViewBag.currentPuzzle;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <!-- <link rel="stylesheet" href="/assets/css/jquery.scrollbar.css"> -->
+    <link rel="stylesheet" href="~/Content/reset.css">
+    <link rel="stylesheet" href="~/Content/style.css">
+    <link rel="stylesheet" href="~/Content/login.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script type="text/javascript">var appInsights = window.appInsights || function (a) { function b(a) { c[a] = function () { var b = arguments; c.queue.push(function () { c[a].apply(c, b) }) } } var c = { config: a }, d = document, e = window; setTimeout(function () { var b = d.createElement("script"); b.src = a.url || "https://az416426.vo.msecnd.net/scripts/a/ai.0.js", d.getElementsByTagName("script")[0].parentNode.appendChild(b) }); try { c.cookie = d.cookie } catch (a) { } c.queue = []; for (var f = ["Event", "Exception", "Metric", "PageView", "Trace", "Dependency"]; f.length;)b("track" + f.pop()); if (b("setAuthenticatedUserContext"), b("clearAuthenticatedUserContext"), b("startTrackEvent"), b("stopTrackEvent"), b("startTrackPage"), b("stopTrackPage"), b("flush"), !a.disableExceptionTracking) { f = "onerror", b("_" + f); var g = e[f]; e[f] = function (a, b, d, e, h) { var i = g && g(a, b, d, e, h); return !0 !== i && c["_" + f](a, b, d, e, h), i } } return c }({ instrumentationKey: "b0efaf73-6b17-49c3-b9ee-dbcc609866a5" }); window.appInsights = appInsights, appInsights.queue && 0 === appInsights.queue.length && appInsights.trackPageView();</script>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-117096964-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-117096964-1');
+    </script>
+</head>
+<body class="body_bg" id="body">
+    <header class="main-header story">
+        <img class="story-logo" src="~/Images/story-logo.png" />
+    </header>
+    <div class="content story">
+        <div class="story-content">
+            <div class="scrollbar-inner">
+                <img src="@Url.Content(Model.Banner)" alt="Alternate Text" />
+                <hr />
+                @Html.Raw(Model?.Descript)
+            </div>
+        </div>
+    </div>
+    <footer class="main-footer story">
+        <!-- TODO 根據操作變換是要返回按鈕還是下一步地按鈕 -->
+        <!-- 下一步按鈕 -->
+        <a href="@Url.Action("Puzzle","Tour",new {puzzleId = currentPuzzle})">
+            <img class="go-btn" id="go-btn" src="~/Images/story-go-btn.png" />
+        </a>
+        <!-- 返回按鈕 -->
+        <!-- <img class="go-btn" id="go-btn" src="/Images/story-back-btn.png" /> -->
+    </footer>
+    <!-- jQuery -->
+    <script src="//code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js" integrity="sha256-xNjb53/rY+WmG+4L6tTl9m6PpqknWZvRt0rO1SRnJzw=" crossorigin="anonymous"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js" integrity="sha384-feJI7QwhOS+hwpX2zkaeJQjeiwlhOP+SdQDqhgvvo1DsjtiSQByFdThsxO669S2D" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.js" integrity="sha256-tcqPYPyxU+Fsv5sVdvnxLYJ7Jq9wWpi4twZbtZ0ubY8=" crossorigin="anonymous"></script>
+    <script src="~/Scripts/axios.min.js"></script>
+
+    <script src="~/Scripts/custom/main.js"></script>
+
+    <script>
+
+        var maxHeight = $(window).height();
+        maxHeight = maxHeight - jQuery('.main-header').height() - jQuery('.main-footer').height();
+        jQuery('.story-content').css('max-height', maxHeight);
+
+        // jQuery(document).ready(function(){
+        // jQuery('.scrollbar-inner').scrollbar();
+        // });
+
+        jQuery('#go-btn').on('click', function () {
+            /*TODO 按下返回或是*/
+        });
+    </script>
+</body>
+</html>

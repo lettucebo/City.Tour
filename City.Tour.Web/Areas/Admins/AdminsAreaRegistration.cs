@@ -17,7 +17,8 @@ namespace City.Tour.Web.Areas.Admins
             context.MapRoute(
                 "Admins_default",
                 "Admins/{controller}/{action}/{id}",
-                new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                new { controller = "Home", action = "Index", id = UrlParameter.Optional },
+                new[] { "City.Tour.Web.Areas.Admins.Controllers" }
             );
         }
     }

@@ -35,22 +35,22 @@
 }
 
 .content.story{
-    background-color: #FFF;
-    min-height: 100%;
+    background-color: #FFF
 }
 
-.story-content {
+.story-content{
     background: url(/Images/story-content.png);
     background-size: cover;
     background-repeat: no-repeat;
     width: 90%;
-    height: 100%;
+    height: 9999px;
     margin: 0 auto;
     overflow: auto;
-    color: #535049;
+    color:  #535049;
 }
 
 .story-content .scrollbar-inner{
     padding: 60px 20px 60px 20px;
+    font-family: Microsoft JhengHei;
     line-height: 1.5em;
 }

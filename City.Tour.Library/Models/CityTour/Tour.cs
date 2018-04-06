@@ -18,6 +18,7 @@ namespace City.Tour.Library.Models.CityTour
         public Tour()
         {
             this.Puzzles = new HashSet<Puzzle>();
+            this.Teams = new HashSet<Team>();
         }
     
         public System.Guid Id { get; set; }
@@ -29,9 +30,23 @@ namespace City.Tour.Library.Models.CityTour
         public bool IsDelete { get; set; }
         public System.DateTime ModifyTime { get; set; }
         public string Info { get; set; }
+        public Nullable<System.Guid> Puzzle1Id { get; set; }
+        public Nullable<System.Guid> Puzzle2Id { get; set; }
+        public Nullable<System.Guid> Puzzle3Id { get; set; }
+        public Nullable<System.Guid> Puzzle4Id { get; set; }
+        public Nullable<System.Guid> Puzzle5Id { get; set; }
+        public Nullable<System.Guid> Puzzle6Id { get; set; }
         public int Sort { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Puzzle> Puzzles { get; set; }
+        public virtual Puzzle Puzzle { get; set; }
+        public virtual Puzzle Puzzle1 { get; set; }
+        public virtual Puzzle Puzzle2 { get; set; }
+        public virtual Puzzle Puzzle3 { get; set; }
+        public virtual Puzzle Puzzle4 { get; set; }
+        public virtual Puzzle Puzzle5 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Team> Teams { get; set; }
     }
 }

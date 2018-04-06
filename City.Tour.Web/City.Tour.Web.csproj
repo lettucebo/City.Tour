@@ -295,6 +295,9 @@
     <Content Include="Images\dialog-btn.png" />
     <Content Include="Images\dialog-go-btn.png" />
     <Content Include="Images\dialog-unactive-bg.png" />
+    <Content Include="Images\gg-bg.png" />
+    <Content Include="Images\gg-bottom.png" />
+    <Content Include="Images\gg-top.png" />
     <Content Include="Images\login-bg.png" />
     <Content Include="Images\login-btn.png" />
     <Content Include="Images\main-ans-input.png" />
@@ -315,6 +318,7 @@
     <Content Include="Images\main-story-btn.png" />
     <Content Include="Images\main-timer-number.png" />
     <Content Include="Images\main-timer.png" />
+    <Content Include="Images\main-total-timer.png" />
     <Content Include="Images\map-demo-content.png" />
     <Content Include="Images\map-demo-msg.png" />
     <Content Include="Images\map-demo-pic.png" />
@@ -345,6 +349,10 @@
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\custom\game_func.js" />
+    <Content Include="Scripts\custom\jquery.scrollbar.min.js" />
+    <Content Include="Scripts\custom\main.js" />
+    <Content Include="Scripts\custom\timer.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
@@ -451,9 +459,9 @@
     <Content Include="Views\Home\Story.cshtml" />
     <Content Include="Views\Home\Map.cshtml" />
     <Content Include="Views\Home\Tour.cshtml" />
+    <Content Include="Views\Tour\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\Admins\Models\" />
     <Folder Include="Views\BaseAdmin\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Game\" />
@@ -497,7 +505,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>14698</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

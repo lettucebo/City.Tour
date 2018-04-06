@@ -1,36 +1,42 @@
 .body_bg .content .map-content-pic{
-	width: 100%;
+	width: 50%;
+	margin-top:10px;
+	margin-left:10px;
 }
 
-.main-footer .map-pic-frame{
-}
-
-.main-footer .map-pic-frame .map-pic{
-	width: 85%;
+.map-pic-frame{
+ 	width: 100%;
+    top: 25%;
     position: absolute;
-    right: 0;
-    bottom: 0px;
+}
+
+.map-pic-frame .map-pic{
+	width: 100%;
+    padding-left: 2%;
+    display: block;
+    height: 100%;
 }
 
 .main-footer .map-input-frame{
 	width: 100%;
-    z-index: 2;
-    position: absolute;
-    bottom: 15px;
-    right: 20px;
+    margin: 45px auto 0;
 }
 
 .main-footer .map-input-frame .map-input-submit, .main-footer .map-input-frame .map-input-pic{
-	float: right;
+	/*float: right;*/
 	position: relative;
 }
 
 .main-footer .map-input-frame .map-input-submit{
-	width: 50px;
-	top: -2px;
+	width: 60px;
+	display: block;
+	position: absolute;
+	bottom: 28px;
+	right: 12px;
 }
 
 .main-footer .map-input-frame .map-input-pic{
 	width: 60%;
-	right: 5px;
+	margin: 0px auto;
+    display: block;
 }

@@ -15,14 +15,17 @@ namespace City.Tour.Library.Models.CityTour
     public partial class User
     {
         public System.Guid Id { get; set; }
+        public System.Guid TeamId { get; set; }
+        public string Name { get; set; }
         public System.DateTime CreateTime { get; set; }
         public string ProfileId { get; set; }
         public string Picture { get; set; }
-        public string Name { get; set; }
         public string Email { get; set; }
         public string Source { get; set; }
         public bool IsDelete { get; set; }
         public System.DateTime ModifyTime { get; set; }
         public bool IsAdmin { get; set; }
+    
+        public virtual Team Team { get; set; }
     }
 }

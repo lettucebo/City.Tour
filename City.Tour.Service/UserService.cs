@@ -26,6 +26,7 @@ namespace City.Tour.Service
                 data = model;
                 data.Id = Ci.Sequential.Guid.Create();
                 data.CreateTime = DateTime.Now;
+                data.ModifyTime = DateTime.Now;
                 data.Picture = $"https://graph.facebook.com/{model.ProfileId}/picture?type=large";
                 db.Users.Add(data);
             }

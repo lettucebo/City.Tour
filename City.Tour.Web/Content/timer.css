@@ -7,12 +7,28 @@
 
 .time-frame{
 	width: 100%;
-	background-image: url('/assets/imgs/main-timer.png');
+	background-image: url('/Images/main-timer.png');
 	background-size: contain;
 	background-repeat: no-repeat;
 }
 
-.main-timer .msec, .main-timer .min, .main-timer .sec{
+.total-timer.main-timer{
+    width: 190px;
+    width: 190px;
+    position: absolute;
+    margin-left: 50%;
+    left: -105px;
+}
+
+.total-timer.main-timer .time-frame{
+    width: 100%;
+    background-image: url('/Images/main-total-timer.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-top: -10px;
+}
+
+.main-timer .msec, .main-timer .min, .main-timer .sec, .main-timer .msec, .main-timer .sec, .main-timer .min{
 	height: 100%;
     width: 50px;
     overflow: hidden;
@@ -25,15 +41,29 @@
 	
 }
 
-.main-timer .min{
+.main-timer .sec{
 }
 
 .main-timer .msec{
     margin-right: 0;	
 }
 
-.main-timer .first, .main-timer .last{
-	background-image: url(/assets/imgs/main-timer-number.png);
+.total-timer.main-timer .min{
+    width: 69px;
+    margin-top: 15px;
+    margin-left: 15px;
+}
+
+.total-timer.main-timer .sec{
+    width: 40px;
+}
+
+.total-timer.main-timer .msec{
+
+}
+
+.main-timer .first, .main-timer .last, .main-timer .med{
+	background-image: url(/Images/main-timer-number.png);
     width: 16px;
     min-height: 25px;
     background-size: cover;

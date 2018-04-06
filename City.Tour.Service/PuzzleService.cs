@@ -84,7 +84,5 @@ namespace City.Tour.Service
         {
             db.Dispose();
         }
-
-
     }
 }
