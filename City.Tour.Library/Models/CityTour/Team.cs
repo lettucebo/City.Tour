@@ -26,6 +26,7 @@ namespace City.Tour.Library.Models.CityTour
         public string InviteCode { get; set; }
         public System.Guid TourId { get; set; }
         public Nullable<System.Guid> CurrentPuzzle { get; set; }
+        public int CurrentPuzzleNum { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User> Users { get; set; }

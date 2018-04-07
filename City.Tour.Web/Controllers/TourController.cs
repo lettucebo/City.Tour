@@ -4,6 +4,8 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Ci.Extension;
+using Ci.Mvc.Alert;
 using City.Tour.Library.Models.CityTour;
 using City.Tour.Service;
 using City.Tour.Web.Base;
@@ -26,33 +28,50 @@ namespace City.Tour.Web.Controllers
 
             ViewBag.currentPuzzle = team.CurrentPuzzle ?? tour.Puzzle1Id;
 
-            //Puzzle puzzle;
-            //switch (team.CurrentPuzzle)
-            //{
-            //    case 1:
-            //        puzzle = puzzleService.GetById(tour.Puzzle1Id.Value);
-            //        break;
-            //    case 2:
-            //        puzzle = puzzleService.GetById(tour.Puzzle2Id.Value);
-            //        break;
-            //    case 3:
-            //        puzzle = puzzleService.GetById(tour.Puzzle3Id.Value);
-            //        break;
-            //    case 4:
-            //        puzzle = puzzleService.GetById(tour.Puzzle4Id.Value);
-            //        break;
-            //    case 5:
-            //        puzzle = puzzleService.GetById(tour.Puzzle5Id.Value);
-            //        break;
-            //    case 6:
-            //        puzzle = puzzleService.GetById(tour.Puzzle6Id.Value);
-            //        break;
-            //    default:
-            //        puzzle = puzzleService.GetById(tour.Puzzle1Id.Value);
-            //        break;
-            //}
-
             return View(tour);
+        }
+
+        public ActionResult PuzzleMap(Guid puzzleId)
+        {
+            var puzzle = puzzleService.GetById(puzzleId);
+            if (puzzle == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "找不到 puzzle");
+
+            if (puzzle.IsPassMap)
+            {
+                return RedirectToAction("Puzzle", "Tour", new { puzzleId });
+            }
+
+            return View(puzzle);
+        }
+
+        [HttpPost]
+        public ActionResult PuzzleMap(Guid puzzleId, string answer)
+        {
+            var puzzle = puzzleService.GetById(puzzleId);
+            if (puzzle == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "找不到 puzzle");
+
+            if (!answer.IsNullOrWhiteSpace() && answer.Trim() == puzzle.MapAnswer.Trim())
+            {
+                puzzleService.SetPassMap(puzzleId);
+                return RedirectToAction("Puzzle", "Tour", new { puzzleId });
+            }
+
+            this.SetAlert("答案錯誤，請再試一次！");
+            return View(puzzle);
+        }
+
+        public ActionResult Puzzle(Guid puzzleId)
+        {
+            var puzzle = puzzleService.GetById(puzzleId);
+            if (puzzle == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "找不到 puzzle");
+
+            if (!puzzle.IsPassMap)
+                return RedirectToAction("PuzzleMap", "Tour", new { puzzleId });
+
+            return View(puzzle);
         }
     }
 }

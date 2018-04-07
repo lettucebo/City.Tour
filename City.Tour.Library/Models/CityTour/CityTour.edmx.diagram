@@ -7,9 +7,12 @@
       <Diagram DiagramId="41bacc85e33e4b0ca009c0ab42c5c44e" Name="Diagram1">
         <EntityTypeShape EntityType="CityTourModel.Answer" Width="1.5" PointX="3" PointY="11.125" />
         <EntityTypeShape EntityType="CityTourModel.Hint" Width="1.5" PointX="3" PointY="1.5" />
-        <EntityTypeShape EntityType="CityTourModel.Puzzle" Width="1.5" PointX="0.75" PointY="5.375" />
         <EntityTypeShape EntityType="CityTourModel.Tour" Width="1.5" PointX="3" PointY="4.75" />
         <EntityTypeShape EntityType="CityTourModel.User" Width="1.5" PointX="7.5" PointY="5.875" />
+        <EntityTypeShape EntityType="CityTourModel.Team" Width="1.5" PointX="5.25" PointY="6.25" />
+        <AssociationConnector Association="CityTourModel.FK_Members_Teams" />
+        <AssociationConnector Association="CityTourModel.FK_Teams_Tours" />
+        <EntityTypeShape EntityType="CityTourModel.Puzzle" Width="1.5" PointX="0.75" PointY="5" />
         <AssociationConnector Association="CityTourModel.FK_Answers_Puzzles" />
         <AssociationConnector Association="CityTourModel.FK_Hints_Puzzles" />
         <AssociationConnector Association="CityTourModel.FK_Puzzles_Tours" />
@@ -19,9 +22,6 @@
         <AssociationConnector Association="CityTourModel.FK_Tours_Puzzles3" />
         <AssociationConnector Association="CityTourModel.FK_Tours_Puzzles4" />
         <AssociationConnector Association="CityTourModel.FK_Tours_Puzzles5" />
-        <EntityTypeShape EntityType="CityTourModel.Team" Width="1.5" PointX="5.25" PointY="6.25" />
-        <AssociationConnector Association="CityTourModel.FK_Members_Teams" />
-        <AssociationConnector Association="CityTourModel.FK_Teams_Tours" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

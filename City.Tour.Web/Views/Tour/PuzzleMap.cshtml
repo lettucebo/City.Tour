@@ -1,0 +1,146 @@
+﻿@using System.Web.UI.WebControls
+@using Ci.Mvc.Alert
+@model City.Tour.Library.Models.CityTour.Puzzle
+@{
+    Layout = "";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <link rel="stylesheet" href="~/Content/reset.css">
+    <link rel="stylesheet" href="~/Content/style.css">
+    <link rel="stylesheet" href="~/Content/timer.css">
+    <link rel="stylesheet" href="~/Content/map.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script type="text/javascript">
+        var appInsights = window.appInsights || function (a) {
+            function b(a) { c[a] = function () { var b = arguments; c.queue.push(function () { c[a].apply(c, b) }) } } var c = { config: a }, d = document, e = window; setTimeout(function () { var b = d.createElement("script"); b.src = a.url || "https://az416426.vo.msecnd.net/scripts/a/ai.0.js", d.getElementsByTagName("script")[0].parentNode.appendChild(b) }); try { c.cookie = d.cookie } catch (a) { } c.queue = []; for (var f = ["Event", "Exception", "Metric", "PageView", "Trace", "Dependency"]; f.length;)b("track" + f.pop()); if (b("setAuthenticatedUserContext"), b("clearAuthenticatedUserContext"), b("startTrackEvent"), b("stopTrackEvent"), b("startTrackPage"), b("stopTrackPage"), b("flush"), !a.disableExceptionTracking) { f = "onerror", b("_" + f); var g = e[f]; e[f] = function (a, b, d, e, h) { var i = g && g(a, b, d, e, h); return !0 !== i && c["_" + f](a, b, d, e, h), i } } return c
+        }({
+            instrumentationKey: "aebcf91e-94d5-48ae-a122-ec08dafa2452"
+        });
+
+        window.appInsights = appInsights, appInsights.queue && 0 === appInsights.queue.length && appInsights.trackPageView();
+    </script>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-117096964-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-117096964-1');
+    </script>
+</head>
+<body class="body_bg" id="body">
+    <header class="main-header">
+        <div class="main-timer" id="main-timer">
+            <div class="time-frame">
+                <div class="min" id="timer-min"><div class="first"></div><div class="last"></div></div>
+                <div class="sec" id="timer-sec"><div class="first"></div><div class="last"></div></div>
+                <div class="msec" id="timer-msec"><div class="first"></div><div class="last"></div></div>
+            </div>
+        </div>
+    </header>
+    <div class="content">
+        <!-- 總體時間 -->
+        <div class="main-timer total-timer" id="total-timer">
+            <div class="time-frame">
+                <div class="min" id="total-timer-min"><div class="first"></div><div class="med"></div><div class="last"></div></div>
+                <div class="sec" id="total-timer-sec"><div class="first"></div><div class="last"></div></div>
+                <div class="msec" id="total-timer-msec"><div class="first"></div><div class="last"></div></div>
+            </div>
+        </div>
+        <a href="@($"http://maps.google.com/maps?daddr={Model.Latitude},{Model.Longitude}&amp;ll=")" target="_blank">
+            <img class="map-content-pic" src="@Url.Content(Model.MapNameImage)" />
+        </a>
+        <div class="map-pic-frame">
+            <img class="map-pic" src="@Url.Content(Model.MapImage)" />
+        </div>
+    </div>
+    <footer class="main-footer">
+        <div class="map-input-frame" id="map-input">
+            <img class="map-input-pic" src="~/Images/map-demo-msg.png" />
+        </div>
+    </footer>
+    <div id="dialog" title="請解答！" class="dialog">
+        <!-- TODO 設定送出位址 -->
+        @using (Html.BeginForm())
+        {
+            <input type="text" name="answer" class="form-control" placeholder="輸入答案" />
+            <br/>
+            <button type="submit" class="btn btn-primary float-right">送出</button>
+        }
+    </div>
+
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js" integrity="sha256-xNjb53/rY+WmG+4L6tTl9m6PpqknWZvRt0rO1SRnJzw=" crossorigin="anonymous"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js" integrity="sha384-feJI7QwhOS+hwpX2zkaeJQjeiwlhOP+SdQDqhgvvo1DsjtiSQByFdThsxO669S2D" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.js" integrity="sha256-tcqPYPyxU+Fsv5sVdvnxLYJ7Jq9wWpi4twZbtZ0ubY8=" crossorigin="anonymous"></script>
+    <script src="~/Scripts/custom/main.js"></script>
+    <script src="~/Scripts/timer.js"></script>
+    <!-- 設定時間 -->
+    <script charset="utf-8" async defer>
+        $(document).ready(function () {
+            console.log("ready!");
+            /*TODO 設定時間 請把 getDemoTime() 換成 microseconds 或是時間字串*/
+            var time = getTimeDiffString(getDemoTime());
+
+            var callback = function () {
+                /*TODO 設定時間到 call back*/
+                alert('時間到！');
+            }
+            setTime(time);
+            startCountDown(callback);
+
+            /*TODO 設定總時間*/
+            var time = getTimeDiffString(getDemoTime(120));
+            var callbackTotal = function () {
+                /*TODO 設定時間到 call back*/
+                setEgg(0);
+                alert('時間到！');
+            }
+
+            //setTimeTotal(time);
+            //startCountDownTotal(callbackTotal);
+
+            /* 設定點擊總體時間的開關 */
+            $('documnent').ready(function () {
+                $('#main-timer').on('click', function () {
+                    $('#total-timer').toggle();
+                });
+                $('#total-timer').hide();
+            });
+
+            $("#dialog").dialog({
+                autoOpen: false,
+                show: {
+                    effect: "blind",
+                    duration: 1000
+                },
+                hide: {
+                    effect: "explode",
+                    duration: 1000
+                },
+                buttons: {
+                    "送出": function () {
+                        $('#form').submit();
+                    }
+                }
+            });
+
+            jQuery('#map-input').on('click', function () {
+
+                $('#dialog').dialog('open');
+            });
+        });
+    </script>
+
+    @Html.ShowAlert();
+</body>
+</html>

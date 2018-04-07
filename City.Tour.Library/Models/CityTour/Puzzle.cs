@@ -36,6 +36,12 @@ namespace City.Tour.Library.Models.CityTour
         public string Picture { get; set; }
         public Nullable<int> Sort { get; set; }
         public System.DateTime ModifyTime { get; set; }
+        public string MapImage { get; set; }
+        public string MapAnswer { get; set; }
+        public Nullable<double> Longitude { get; set; }
+        public Nullable<double> Latitude { get; set; }
+        public string MapNameImage { get; set; }
+        public bool IsPassMap { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Answer> Answers { get; set; }

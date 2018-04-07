@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -83,6 +84,13 @@ namespace City.Tour.Service
         public void Dispose()
         {
             db.Dispose();
+        }
+
+        public void SetPassMap(Guid puzzleId)
+        {
+            var puzzle = GetById(puzzleId);
+            puzzle.IsPassMap = true;
+            db.SaveChanges();
         }
     }
 }

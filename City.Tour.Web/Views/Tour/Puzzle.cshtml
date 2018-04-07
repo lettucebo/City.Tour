@@ -1,0 +1,222 @@
+﻿@model City.Tour.Library.Models.CityTour.Puzzle
+@{
+    ViewBag.Title = "Puzzle";
+    Layout = "~/Views/Shared/_LayoutCustom.cshtml";
+}
+
+@section contents
+{
+    <link rel="stylesheet" href="~/Content/main-game.css">
+
+}
+
+<header class="main-header">
+    <div class="main-timer" id="main-timer">
+        <div class="time-frame">
+            <div class="min" id="timer-min"><div class="first"></div><div class="last"></div></div>
+            <div class="sec" id="timer-sec"><div class="first"></div><div class="last"></div></div>
+            <div class="msec" id="timer-msec"><div class="first"></div><div class="last"></div></div>
+        </div>
+    </div>
+</header>
+
+<div class="content">
+    <!-- 總體時間 -->
+    <div class="main-timer total-timer" id="total-timer">
+        <div class="time-frame">
+            <div class="min" id="total-timer-min"><div class="first"></div><div class="med"></div><div class="last"></div></div>
+            <div class="sec" id="total-timer-sec"><div class="first"></div><div class="last"></div></div>
+            <div class="msec" id="total-timer-msec"><div class="first"></div><div class="last"></div></div>
+        </div>
+    </div>
+    <!-- TODO 依據程式換圖 要換成謎題內容-->
+    <div class="story-content" id="story-content">
+        <div class="scrollbar-inner">
+            @Model.Name
+            <hr />
+            @Model.Descript
+        </div>
+        <div class="main-pic-frame">
+            <!-- TODO 從js 切換亮燈 -->
+            <img class="main-pic-egg" src="~/Images/main-egg.png" />
+
+        </div>
+    </div>
+</div>
+<footer class="main-footer">
+
+    <div class="main-input-frame">
+        <div class="up" id="main-input">
+            <img class="main-input-pic" src="~/Images/main-ans-input.png" />
+        </div>
+
+    </div>
+    <img class="main-story-logo" id="main-story-logo" src="~/Images/main-story-btn.png" />
+</footer>
+
+<!-- 輸入答案 -->
+<div id="dialog" title="請解答！" class="dialog">
+    <!-- TODO 設定送出位址 -->
+    <form id="form" action="#" method="POST" accept-charset="utf-8">
+        <input class="input" type="text" name="ans" placeholder="輸入答案" />
+    </form>
+</div>
+<div id="fail-dialog" class="dialog">
+    <div class="fail-dialog">
+        <div class="dialog-msg"><p>可能要仔細再想想，<br />&nbsp;&nbsp;&nbsp;&nbsp;就差那臨門一腳了！</p></div>
+        <img class="dialog-bg" src="~/Images/dialog-unactive-bg.png" />
+    </div>
+</div>
+<div id="success-dialog" class="dialog success-dialog">
+    <div class="success-dialog">
+        <!-- TODO dialog-msg 中藥塞入成功以後的訊息 -->
+        <div class="dialog-msg"><p>恭喜！恭喜！</p></div>
+        <img class="dialog-bg" src="~/Images/dialog-active-bg.png" />
+    </div>
+</div>
+
+
+@section scripts
+{
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js" integrity="sha256-xNjb53/rY+WmG+4L6tTl9m6PpqknWZvRt0rO1SRnJzw=" crossorigin="anonymous"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js" integrity="sha384-feJI7QwhOS+hwpX2zkaeJQjeiwlhOP+SdQDqhgvvo1DsjtiSQByFdThsxO669S2D" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.js" integrity="sha256-tcqPYPyxU+Fsv5sVdvnxLYJ7Jq9wWpi4twZbtZ0ubY8=" crossorigin="anonymous"></script>
+    <script src="~/Scripts/custom/main.js"></script>
+    <script src="~/Scripts/timer.js"></script>
+    <script src="~/Scripts/game_func.js"></script>
+
+    <script>
+        setEgg(0);
+
+        var promptFunc = function (minute) {
+
+            switch (minute) {
+                case 15:
+                    setEgg(1);
+                    break;
+                case 10:
+                    setEgg(2);
+                    break;
+                case 5:
+                    setEgg(3);
+                    break;
+                case 0:
+                    setEgg(4);
+                    break;
+                default:
+                    setEgg(0);
+                    break;
+            }
+        }
+
+        setTimesupPrompt(promptFunc);
+
+        /*點擊提示的蛋蛋出現的提示，目前用alert*/
+        $('#story-content').on('click', function () {
+
+            /*要有active 點擊了才有效果*/
+            var isActiveElem = jQuery(this).find('.active');
+            if (isActiveElem.length > 0) {
+
+                /*TODO 先把不同的等級蛋蛋塞入提示訊息*/
+                if (isActiveElem.hasClass('active5')) {
+
+                } else if (isActiveElem.hasClass('active4')) {
+
+                } else if (isActiveElem.hasClass('active3')) {
+
+                } else if (isActiveElem.hasClass('active2')) {
+
+                } else if (isActiveElem.hasClass('active1')) {
+
+                }
+
+                /*TODO 跳出提示*/
+                alert('提示訊息');
+            }
+        });
+
+        /* TODO 設定點擊故事頁按鈕 開啟或是跳轉 */
+        $('#main-story-logo').on('click', function () {
+            location.href = '/story-back.html';
+        });
+
+        /*設定高度*/
+        var maxHeight = $(window).height();
+        maxHeight = maxHeight - jQuery('.main-header').height() - jQuery('.main-footer').height();
+        $('.scrollbar-inner').css('height', maxHeight - 60);
+        $('.scrollbar-inner').css('margin-top', '10px');
+
+        /*TODO 設定時間 請把 getDemoTime() 換成 microseconds 或是時間字串*/
+        var time = getTimeDiffString(getDemoTime());
+
+        var callback = function () {
+            /*TODO 設定時間到 call back*/
+            setEgg(0);
+            alert('時間到！');
+        }
+
+        setTime(time);
+        startCountDown(callback, 5);
+
+        /*TODO 設定總時間*/
+        var time = getTimeDiffString(getDemoTime(120));
+        var callbackTotal = function () {
+            /*TODO 設定時間到 call back*/
+            setEgg(0);
+            alert('時間到！');
+        }
+
+        //setTimeTotal(time);
+        //startCountDownTotal(callbackTotal);
+
+        /* 設定點擊總體時間的開關 */
+        $('documnent').ready(function () {
+            $('#main-timer').on('click', function () {
+                $('#total-timer').toggle();
+            });
+            $('#total-timer').hide();
+        });
+
+
+        /* 設定輸入正確或失敗的callback*/
+        var successDialogClicked = function () {
+            // TODO 設定下一頁
+            alert("請跳到下一頁");
+        }
+
+        var failDialogClicked = function () {
+            // TODO 關閉，如果有需要做些其他動作就操作
+            console.log("失敗");
+        }
+
+        $("#dialog").dialog({
+            autoOpen: false,
+            show: {
+                effect: "blind",
+                duration: 1000
+            },
+            hide: {
+                effect: "explode",
+                duration: 0
+            },
+            buttons: {
+                "送出": function () {
+                    $('#form').submit();
+                }
+            }
+        });
+
+        /*TODO 如果答案正確*/
+        // showSuccessDialog(successDialogClicked);
+        /*TODO 如果答案錯誤*/
+        // showFailDialog(failDialogClicked);
+
+        //打開答案輸入框框
+        $('#main-input, #main-submit').on('click', function () {
+            $('#dialog').dialog('open');
+        });
+    </script>
+}
