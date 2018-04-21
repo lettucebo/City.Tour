@@ -1,6 +1,6 @@
 .main-timer{
     overflow: hidden;
-    width: 170px;
+    width: 190px;
     margin: 0 auto;
     padding: 10px;
 }
@@ -13,8 +13,7 @@
 }
 
 .total-timer.main-timer{
-    width: 190px;
-    width: 190px;
+    width: 210px;
     position: absolute;
     margin-left: 50%;
     left: -105px;
@@ -59,7 +58,7 @@
 }
 
 .total-timer.main-timer .msec{
-
+    margin-left:5px;
 }
 
 .main-timer .first, .main-timer .last, .main-timer .med{
