@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="~/Content/reset.css">
     <link rel="stylesheet" href="~/Content/style.css">
     <link rel="stylesheet" href="~/Content/login.css">
+    <link href="~/Content/story.css" rel="stylesheet" />
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script type="text/javascript">
@@ -45,6 +46,7 @@
             <div class="scrollbar-inner">
                 <img src="@Url.Content(Model.Banner)" alt="Alternate Text" />
                 <hr />
+                @*todo use youtube url*@
                 @Html.Raw(Model?.Descript)
             </div>
         </div>
@@ -72,10 +74,6 @@
         var maxHeight = $(window).height();
         maxHeight = maxHeight - jQuery('.main-header').height() - jQuery('.main-footer').height();
         jQuery('.story-content').css('max-height', maxHeight);
-
-        // jQuery(document).ready(function(){
-        // jQuery('.scrollbar-inner').scrollbar();
-        // });
 
         jQuery('#go-btn').on('click', function () {
             /*TODO 按下返回或是*/

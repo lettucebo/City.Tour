@@ -1,6 +1,9 @@
 var minute = 0;
 var sec = 0;
 var msec = 0;
+var minuteTotal = 0;
+var secTotal = 0;
+var msecTotal = 0;
 var isCountDown = false;
 var prompt = 0;
 
@@ -58,7 +61,6 @@ function countDown(callback, timesupMinute = 5){ // timesupMinute = 5 代表每�
 	}, 1);
 }
 
-
 /*輸入目標的時間字串 "年-月-日 時:分：秒" e.g. "2018-1-21 00:20:53" */
 function getTimeDiffString(targetTimeStr){
 	
@@ -79,9 +81,8 @@ function getTimeDiffString(targetTimeStr){
 }
 
 /*注意！只有for demo 使用*/
-function getDemoTime(){
-
-	var addMinute = 99;
+function getDemoTime(addMinute = 20){
+	console.log("addMinute: " + addMinute);
 	var date = new Date();
 	date = new Date(date.getTime() + addMinute * 60000);
 	console.log("demo date: " + date);
@@ -151,7 +152,7 @@ function checkNum(num){
 
 function getPosition(num){
 	if(num > 9 || num < 0){
-		return '0';
+		return '1%';
 	}
 
 	switch (num){
@@ -178,6 +179,92 @@ function getPosition(num){
 		default:
 			return '1%';
 	}
-	return '0';
+	return '1%';
+}
+
+/*總時間計算*/ 
+
+function pauseCountDownTotal(){
+	isCountDownTotal = false;
+}
+
+function startCountDownTotal(callback){
+	isCountDownTotal = true;
+	countDownTotal(callback);
+}
+
+
+function countDownTotal(callback){
+	
+	if(!isCountDownTotal){
+		return;
+	}
+
+	// console.log(minute + ":" + sec + ":" + msec);
+
+	setTimeout(function(){
+
+		if(msecTotal > 0){
+			setMSecTotal(msecTotal - 1);
+		}else{
+			if(secTotal > 0){
+				setMSecTotal(99);
+				setSecTotal(secTotal - 1);
+			}else{
+				if(minuteTotal > 0){
+					setSecTotal(59);
+					setMinuteTotal(minuteTotal - 1);
+					
+				}else{
+					setMinuteTotal(0);
+					isCountDownTotal = false;
+				}
+			}
+		}
+
+		if(isCountDownTotal){
+
+			countDownTotal(callback);
+		}else{
+			if(msec == 0 && minute == 0 && sec == 0)
+				(callback && typeof(callback) === "function") && callback();
+			else
+				console.log('countDown continue');
+		}
+	}, 1);
+}
+
+function setTimeTotal(strTime){
+	var arr = strTime.split(':');
+	setMinuteTotal(arr[0]);
+	setSecTotal(arr[1]);
+	setMSecTotal(arr[2]);
+}
+
+function setMSecTotal(num){
+	num = checkNum(num);
+	msecTotal = num;
+	setNum(num, '#total-timer-msec');
+}
+
+function setMinuteTotal(num){
+	minuteTotal = num;
+	setNumMinute(num, '#total-timer-min');
+}
+
+function setSecTotal(num){
+	num = checkNum(num);
+	secTotal = num;
+	setNum(num, '#total-timer-sec');
+}
+
+function setNumMinute(num, elemID){
+	var first = Math.floor(num / 100);
+	var med =  Math.floor( (num %100) / 10);
+	var last = num % 10;
+	console.log("setNum: " + first + "," + med + "," + last);
+	$(elemID).find('.first').css('background-position-y',getPosition(first));
+	$(elemID).find('.med').css('background-position-y',getPosition(med));
+	$(elemID).find('.last').css('background-position-y',getPosition(last));
 }
 

@@ -15,7 +15,7 @@ function detectmob() {
 }
 
 if(!detectmob()){
-	console.log("請使用手機瀏覽！");
+	alert("請使用手機瀏覽！");
 }
 
 window.addEventListener("orientationchange",onOrientationchange ,false);
@@ -24,6 +24,6 @@ window.addEventListener("orientationchange",onOrientationchange ,false);
 	      //直式
 	}
 	if (window.orientation === 90 || window.orientation === -90 ){
-	    console.log("手機請使用直向瀏覽！");
+	    alert("手機請使用直向瀏覽！");
 	} 
 }

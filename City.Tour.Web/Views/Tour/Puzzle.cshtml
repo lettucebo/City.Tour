@@ -83,7 +83,7 @@
     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js" integrity="sha256-xNjb53/rY+WmG+4L6tTl9m6PpqknWZvRt0rO1SRnJzw=" crossorigin="anonymous"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js" integrity="sha384-feJI7QwhOS+hwpX2zkaeJQjeiwlhOP+SdQDqhgvvo1DsjtiSQByFdThsxO669S2D" crossorigin="anonymous"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.js" integrity="sha256-tcqPYPyxU+Fsv5sVdvnxLYJ7Jq9wWpi4twZbtZ0ubY8=" crossorigin="anonymous"></script>
-    <script src="~/Scripts/custom/main.js"></script>
+    <script src="~/Scripts/main.js"></script>
     <script src="~/Scripts/timer.js"></script>
     <script src="~/Scripts/game_func.js"></script>
 
@@ -169,8 +169,8 @@
             alert('時間到！');
         }
 
-        //setTimeTotal(time);
-        //startCountDownTotal(callbackTotal);
+        setTimeTotal(time);
+        startCountDownTotal(callbackTotal);
 
         /* 設定點擊總體時間的開關 */
         $('documnent').ready(function () {

@@ -6,15 +6,15 @@ var failDialog = $('#fail-dialog');
 function setEgg(level){
 
 	var elem = $('#story-content').find('img.main-pic-egg');
-	/*<!-- <img class="main-pic-egg active1" src="/Images/main-egg-active1.png" id="active" /> -->
-	<!-- <img class="main-pic-egg active2" src="/Images/main-egg-active2.png" id="active" /> -->
-	<img class="main-pic-egg active3" src="/Images/main-egg-active3.png" id="active" />
-	<!-- <img class="main-pic-egg active4" src="/Images/main-egg-active4.png" id="active" /> -->
-	<!-- <img class="main-pic-egg active5" src="/Images/main-egg-active5.png" id="active" /> -->*/
+	/*<!-- <img class="main-pic-egg active1" src="/assets/imgs/main-egg-active1.png" id="active" /> -->
+	<!-- <img class="main-pic-egg active2" src="/assets/imgs/main-egg-active2.png" id="active" /> -->
+	<img class="main-pic-egg active3" src="/assets/imgs/main-egg-active3.png" id="active" />
+	<!-- <img class="main-pic-egg active4" src="/assets/imgs/main-egg-active4.png" id="active" /> -->
+	<!-- <img class="main-pic-egg active5" src="/assets/imgs/main-egg-active5.png" id="active" /> -->*/
 	if(level > 0){
 		elem.addClass('active');
 		//更改蛋蛋等級的圖
-		elem.attr('src', '/Images/main-egg-active'+level+'.png');
+		elem.attr('src', '/assets/imgs/main-egg-active'+level+'.png');
 		elem.addClass('active' + level);
 	}
 }
