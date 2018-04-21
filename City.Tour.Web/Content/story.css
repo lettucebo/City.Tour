@@ -54,3 +54,7 @@
     font-family: Microsoft JhengHei;
     line-height: 1.5em;
 }
+
+.scrollbar-inner *{
+    width: 100%;
+}
