@@ -68,7 +68,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.js" integrity="sha256-tcqPYPyxU+Fsv5sVdvnxLYJ7Jq9wWpi4twZbtZ0ubY8=" crossorigin="anonymous"></script>
     <script src="~/Scripts/axios.min.js"></script>
 
-    <script src="~/Scripts/custom/main.js"></script>
+    <script src="~/Scripts/main.js"></script>
 
     <script type="text/javascript">
         $("#dialog").dialog({
@@ -128,6 +128,18 @@
             } else {
                 console.log("UNKNOWN ERROR" + JSON.stringify(response));
             }
+        }
+
+        function qs(key) {
+            key = key.replace(/[*+?^$.\[\]{}()|\\\/]/g, "\\$&"); // escape RegEx control chars
+            var match = location.search.match(new RegExp("[?&]" + key + "=([^&]+)(&|$)"));
+            return match && decodeURIComponent(match[1].replace(/\+/g, " "));
+        }
+
+        var team_id = qs('team');
+        $('#teamCode').val(team_id);
+        if (team_id.length > 0) {
+            $('#teamCode').attr('readonly', 'readonly');
         }
     </script>
 </body>

@@ -383,9 +383,9 @@
     <Content Include="Areas\Admins\Views\Answer\Index.cshtml" />
     <Content Include="Areas\Admins\Views\Answer\Create.cshtml" />
     <Content Include="Areas\Admins\Views\Answer\Edit.cshtml" />
-    <None Include="Properties\PublishProfiles\CityTourWeb - Web Deploy.pubxml" />
     <Content Include="Scripts\axios.min.map" />
     <Content Include="Scripts\axios.map" />
+    <None Include="Properties\PublishProfiles\CityTourScount - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
