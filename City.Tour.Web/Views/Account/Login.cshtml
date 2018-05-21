@@ -74,16 +74,16 @@
         function qs(key) {
             key = key.replace(/[*+?^$.\[\]{}()|\\\/]/g, "\\$&"); // escape RegEx control chars
             var match = location.search.match(new RegExp("[?&]" + key + "=([^&]+)(&|$)"));
-            if(!(match == null || match.length === 0) ){
+            if (!(match == null || match.length === 0)) {
                 return match && decodeURIComponent(match[1].replace(/\+/g, " "));
-            }else{
+            } else {
                 return "";
             }
         }
 
         var team_id = qs('team');
         $('#teamCode').val(team_id);
-        if(team_id.length > 0){
+        if (team_id != undefined && team_id.length > 0) {
             $('#teamCode').attr('readonly', 'readonly');
         }
 
