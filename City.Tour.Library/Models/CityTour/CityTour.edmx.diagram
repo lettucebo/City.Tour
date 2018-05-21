@@ -22,6 +22,8 @@
         <AssociationConnector Association="CityTourModel.FK_Tours_Puzzles3" />
         <AssociationConnector Association="CityTourModel.FK_Tours_Puzzles4" />
         <AssociationConnector Association="CityTourModel.FK_Tours_Puzzles5" />
+        <EntityTypeShape EntityType="CityTourModel.TeamRecord" Width="1.5" PointX="7.5" PointY="10.75" />
+        <AssociationConnector Association="CityTourModel.FK_TeamRecord_Teams" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

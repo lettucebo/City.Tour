@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "City.Tour.Service", "City.T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "City.Tour.Library", "City.Tour.Library\City.Tour.Library.csproj", "{90123CC4-1DE8-4EBB-BE1C-7B4729CE6559}"
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "City.Tour.Database", "City.Tour.Database\City.Tour.Database.sqlproj", "{2EAA2A75-4FEE-42B8-8A79-9CA221E909E0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,12 @@ Global
 		{90123CC4-1DE8-4EBB-BE1C-7B4729CE6559}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90123CC4-1DE8-4EBB-BE1C-7B4729CE6559}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90123CC4-1DE8-4EBB-BE1C-7B4729CE6559}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EAA2A75-4FEE-42B8-8A79-9CA221E909E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EAA2A75-4FEE-42B8-8A79-9CA221E909E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EAA2A75-4FEE-42B8-8A79-9CA221E909E0}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{2EAA2A75-4FEE-42B8-8A79-9CA221E909E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EAA2A75-4FEE-42B8-8A79-9CA221E909E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EAA2A75-4FEE-42B8-8A79-9CA221E909E0}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -50,6 +50,37 @@
           <Property Name="MapNameImage" Type="nvarchar" MaxLength="500" />
           <Property Name="IsPassMap" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="TeamRecords">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="TeamId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Puzzle1StartTime" Type="datetime" />
+          <Property Name="Puzzle1CompleteTime" Type="datetime" />
+          <Property Name="Puzzle2StartTime" Type="datetime" />
+          <Property Name="Puzzle2CompleteTime" Type="datetime" />
+          <Property Name="Puzzle3StartTime" Type="datetime" />
+          <Property Name="Puzzle3CompleteTime" Type="datetime" />
+          <Property Name="Puzzle4StartTime" Type="datetime" />
+          <Property Name="Puzzle4CompleteTime" Type="datetime" />
+          <Property Name="Puzzle5StartTime" Type="datetime" />
+          <Property Name="Puzzle5CompleteTime" Type="datetime" />
+          <Property Name="Puzzle6StartTime" Type="datetime" />
+          <Property Name="Puzzle6CompleteTime" Type="datetime" />
+          <Property Name="IsPassPuzzle1Map" Type="bit" Nullable="false" />
+          <Property Name="IsPassPuzzle2Map" Type="bit" Nullable="false" />
+          <Property Name="IsPassPuzzle3Map" Type="bit" Nullable="false" />
+          <Property Name="IsPassPuzzle4Map" Type="bit" Nullable="false" />
+          <Property Name="IsPassPuzzle5Map" Type="bit" Nullable="false" />
+          <Property Name="IsPassPuzzle6Map" Type="bit" Nullable="false" />
+          <Property Name="PassPuzzle1MapTime" Type="datetime" />
+          <Property Name="PassPuzzle2MapTime" Type="datetime" />
+          <Property Name="PassPuzzle3MapTime" Type="datetime" />
+          <Property Name="PassPuzzle4MapTime" Type="datetime" />
+          <Property Name="PassPuzzle5MapTime" Type="datetime" />
+          <Property Name="PassPuzzle6MapTime" Type="datetime" />
+        </EntityType>
         <EntityType Name="Teams">
           <Key>
             <PropertyRef Name="Id" />
@@ -59,7 +90,7 @@
           <Property Name="CreateTime" Type="datetime" Nullable="false" />
           <Property Name="InviteCode" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="TourId" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="CurrentPuzzle" Type="uniqueidentifier" />
+          <Property Name="CurrentPuzzleId" Type="uniqueidentifier" />
           <Property Name="CurrentPuzzleNum" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Tours">
@@ -82,6 +113,7 @@
           <Property Name="Puzzle5Id" Type="uniqueidentifier" />
           <Property Name="Puzzle6Id" Type="uniqueidentifier" />
           <Property Name="Sort" Type="int" Nullable="false" />
+          <Property Name="VideoUrl" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -144,6 +176,18 @@
             </Principal>
             <Dependent Role="Puzzles">
               <PropertyRef Name="TourId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamRecord_Teams">
+          <End Role="Teams" Type="Self.Teams" Multiplicity="1" />
+          <End Role="TeamRecords" Type="Self.TeamRecords" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teams">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TeamRecords">
+              <PropertyRef Name="TeamId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -235,6 +279,7 @@
           <EntitySet Name="Answers" EntityType="Self.Answers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Hints" EntityType="Self.Hints" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Puzzles" EntityType="Self.Puzzles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TeamRecords" EntityType="Self.TeamRecords" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Teams" EntityType="Self.Teams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tours" EntityType="Self.Tours" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
@@ -253,6 +298,10 @@
           <AssociationSet Name="FK_Puzzles_Tours" Association="Self.FK_Puzzles_Tours">
             <End Role="Tours" EntitySet="Tours" />
             <End Role="Puzzles" EntitySet="Puzzles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamRecord_Teams" Association="Self.FK_TeamRecord_Teams">
+            <End Role="Teams" EntitySet="Teams" />
+            <End Role="TeamRecords" EntitySet="TeamRecords" />
           </AssociationSet>
           <AssociationSet Name="FK_Teams_Tours" Association="Self.FK_Teams_Tours">
             <End Role="Tours" EntitySet="Tours" />
@@ -338,6 +387,11 @@
             <End Role="Puzzle" EntitySet="Puzzles" />
             <End Role="Tour" EntitySet="Tours" />
           </AssociationSet>
+          <EntitySet Name="TeamRecords" EntityType="CityTourModel.TeamRecord" />
+          <AssociationSet Name="FK_TeamRecord_Teams" Association="CityTourModel.FK_TeamRecord_Teams">
+            <End Role="Team" EntitySet="Teams" />
+            <End Role="TeamRecord" EntitySet="TeamRecords" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Answer">
           <Key>
@@ -394,6 +448,7 @@
           <NavigationProperty Name="Puzzle3" Relationship="CityTourModel.FK_Tours_Puzzles3" FromRole="Tour" ToRole="Puzzle" />
           <NavigationProperty Name="Puzzle4" Relationship="CityTourModel.FK_Tours_Puzzles4" FromRole="Tour" ToRole="Puzzle" />
           <NavigationProperty Name="Puzzle5" Relationship="CityTourModel.FK_Tours_Puzzles5" FromRole="Tour" ToRole="Puzzle" />
+          <Property Name="VideoUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           </EntityType>
         <EntityType Name="User">
           <Key>
@@ -425,6 +480,8 @@
           <NavigationProperty Name="Users" Relationship="CityTourModel.FK_Members_Teams" FromRole="Team" ToRole="User" />
           <NavigationProperty Name="Tour" Relationship="CityTourModel.FK_Teams_Tours" FromRole="Team" ToRole="Tour" />
           <Property Name="CurrentPuzzleNum" Type="Int32" Nullable="false" />
+          <Property Name="CurrentPuzzleId" Type="Guid" />
+          <NavigationProperty Name="TeamRecords" Relationship="CityTourModel.FK_TeamRecord_Teams" FromRole="Team" ToRole="TeamRecord" />
         </EntityType>
         <Association Name="FK_Members_Teams">
           <End Type="CityTourModel.Team" Role="Team" Multiplicity="1" />
@@ -587,6 +644,50 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="TeamRecord">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="TeamId" Type="Guid" Nullable="false" />
+          <Property Name="Puzzle1StartTime" Type="DateTime" Precision="3" />
+          <Property Name="Puzzle1CompleteTime" Type="DateTime" Precision="3" />
+          <Property Name="Puzzle2StartTime" Type="DateTime" Precision="3" />
+          <Property Name="Puzzle2CompleteTime" Type="DateTime" Precision="3" />
+          <Property Name="Puzzle3StartTime" Type="DateTime" Precision="3" />
+          <Property Name="Puzzle3CompleteTime" Type="DateTime" Precision="3" />
+          <Property Name="Puzzle4StartTime" Type="DateTime" Precision="3" />
+          <Property Name="Puzzle4CompleteTime" Type="DateTime" Precision="3" />
+          <Property Name="Puzzle5StartTime" Type="DateTime" Precision="3" />
+          <Property Name="Puzzle5CompleteTime" Type="DateTime" Precision="3" />
+          <Property Name="Puzzle6StartTime" Type="DateTime" Precision="3" />
+          <Property Name="Puzzle6CompleteTime" Type="DateTime" Precision="3" />
+          <Property Name="IsPassPuzzle1Map" Type="Boolean" Nullable="false" />
+          <Property Name="IsPassPuzzle2Map" Type="Boolean" Nullable="false" />
+          <Property Name="IsPassPuzzle3Map" Type="Boolean" Nullable="false" />
+          <Property Name="IsPassPuzzle4Map" Type="Boolean" Nullable="false" />
+          <Property Name="IsPassPuzzle5Map" Type="Boolean" Nullable="false" />
+          <Property Name="IsPassPuzzle6Map" Type="Boolean" Nullable="false" />
+          <Property Name="PassPuzzle1MapTime" Type="DateTime" Precision="3" />
+          <Property Name="PassPuzzle2MapTime" Type="DateTime" Precision="3" />
+          <Property Name="PassPuzzle3MapTime" Type="DateTime" Precision="3" />
+          <Property Name="PassPuzzle4MapTime" Type="DateTime" Precision="3" />
+          <Property Name="PassPuzzle5MapTime" Type="DateTime" Precision="3" />
+          <Property Name="PassPuzzle6MapTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Team" Relationship="CityTourModel.FK_TeamRecord_Teams" FromRole="TeamRecord" ToRole="Team" />
+        </EntityType>
+        <Association Name="FK_TeamRecord_Teams">
+          <End Type="CityTourModel.Team" Role="Team" Multiplicity="1" />
+          <End Type="CityTourModel.TeamRecord" Role="TeamRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TeamRecord">
+              <PropertyRef Name="TeamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -623,6 +724,7 @@
           <EntitySetMapping Name="Tours">
             <EntityTypeMapping TypeName="CityTourModel.Tour">
               <MappingFragment StoreEntitySet="Tours">
+                <ScalarProperty Name="VideoUrl" ColumnName="VideoUrl" />
                 <ScalarProperty Name="Sort" ColumnName="Sort" />
                 <ScalarProperty Name="Puzzle6Id" ColumnName="Puzzle6Id" />
                 <ScalarProperty Name="Puzzle5Id" ColumnName="Puzzle5Id" />
@@ -662,8 +764,8 @@
           <EntitySetMapping Name="Teams">
             <EntityTypeMapping TypeName="CityTourModel.Team">
               <MappingFragment StoreEntitySet="Teams">
+                <ScalarProperty Name="CurrentPuzzleId" ColumnName="CurrentPuzzleId" />
                 <ScalarProperty Name="CurrentPuzzleNum" ColumnName="CurrentPuzzleNum" />
-                <ScalarProperty Name="CurrentPuzzle" ColumnName="CurrentPuzzle" />
                 <ScalarProperty Name="TourId" ColumnName="TourId" />
                 <ScalarProperty Name="InviteCode" ColumnName="InviteCode" />
                 <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
@@ -689,6 +791,38 @@
                 <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
                 <ScalarProperty Name="TourId" ColumnName="TourId" />
                 <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TeamRecords">
+            <EntityTypeMapping TypeName="CityTourModel.TeamRecord">
+              <MappingFragment StoreEntitySet="TeamRecords">
+                <ScalarProperty Name="PassPuzzle6MapTime" ColumnName="PassPuzzle6MapTime" />
+                <ScalarProperty Name="PassPuzzle5MapTime" ColumnName="PassPuzzle5MapTime" />
+                <ScalarProperty Name="PassPuzzle4MapTime" ColumnName="PassPuzzle4MapTime" />
+                <ScalarProperty Name="PassPuzzle3MapTime" ColumnName="PassPuzzle3MapTime" />
+                <ScalarProperty Name="PassPuzzle2MapTime" ColumnName="PassPuzzle2MapTime" />
+                <ScalarProperty Name="PassPuzzle1MapTime" ColumnName="PassPuzzle1MapTime" />
+                <ScalarProperty Name="IsPassPuzzle6Map" ColumnName="IsPassPuzzle6Map" />
+                <ScalarProperty Name="IsPassPuzzle5Map" ColumnName="IsPassPuzzle5Map" />
+                <ScalarProperty Name="IsPassPuzzle4Map" ColumnName="IsPassPuzzle4Map" />
+                <ScalarProperty Name="IsPassPuzzle3Map" ColumnName="IsPassPuzzle3Map" />
+                <ScalarProperty Name="IsPassPuzzle2Map" ColumnName="IsPassPuzzle2Map" />
+                <ScalarProperty Name="IsPassPuzzle1Map" ColumnName="IsPassPuzzle1Map" />
+                <ScalarProperty Name="Puzzle6CompleteTime" ColumnName="Puzzle6CompleteTime" />
+                <ScalarProperty Name="Puzzle6StartTime" ColumnName="Puzzle6StartTime" />
+                <ScalarProperty Name="Puzzle5CompleteTime" ColumnName="Puzzle5CompleteTime" />
+                <ScalarProperty Name="Puzzle5StartTime" ColumnName="Puzzle5StartTime" />
+                <ScalarProperty Name="Puzzle4CompleteTime" ColumnName="Puzzle4CompleteTime" />
+                <ScalarProperty Name="Puzzle4StartTime" ColumnName="Puzzle4StartTime" />
+                <ScalarProperty Name="Puzzle3CompleteTime" ColumnName="Puzzle3CompleteTime" />
+                <ScalarProperty Name="Puzzle3StartTime" ColumnName="Puzzle3StartTime" />
+                <ScalarProperty Name="Puzzle2CompleteTime" ColumnName="Puzzle2CompleteTime" />
+                <ScalarProperty Name="Puzzle2StartTime" ColumnName="Puzzle2StartTime" />
+                <ScalarProperty Name="Puzzle1CompleteTime" ColumnName="Puzzle1CompleteTime" />
+                <ScalarProperty Name="Puzzle1StartTime" ColumnName="Puzzle1StartTime" />
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

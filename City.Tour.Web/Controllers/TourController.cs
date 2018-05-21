@@ -73,5 +73,20 @@ namespace City.Tour.Web.Controllers
 
             return View(puzzle);
         }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Puzzle(Guid puzzleId, string answer)
+        {
+            var puzzle = puzzleService.GetById(puzzleId);
+            if (puzzle == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "找不到 puzzle");
+
+            if (!puzzle.IsPassMap)
+                return RedirectToAction("PuzzleMap", "Tour", new { puzzleId });
+
+            return View(puzzle);
+        }
     }
 }

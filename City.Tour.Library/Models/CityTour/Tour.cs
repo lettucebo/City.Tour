@@ -37,6 +37,7 @@ namespace City.Tour.Library.Models.CityTour
         public Nullable<System.Guid> Puzzle5Id { get; set; }
         public Nullable<System.Guid> Puzzle6Id { get; set; }
         public int Sort { get; set; }
+        public string VideoUrl { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Team> Teams { get; set; }
