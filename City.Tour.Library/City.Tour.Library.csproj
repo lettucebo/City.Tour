@@ -49,9 +49,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\CityTour\Answer.cs">
-      <DependentUpon>CityTour.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\CityTour\CityTour.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

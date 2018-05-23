@@ -250,7 +250,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Admins\AdminsAreaRegistration.cs" />
-    <Compile Include="Areas\Admins\Controllers\AnswerController.cs" />
     <Compile Include="Areas\Admins\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admins\Controllers\PuzzleController.cs" />
     <Compile Include="Areas\Admins\Controllers\TourController.cs" />

@@ -26,7 +26,7 @@ namespace City.Tour.Web.Controllers
             if (tour == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "找不到 Tour");
 
-            ViewBag.currentPuzzle = team.CurrentPuzzle ?? tour.Puzzle1Id;
+            ViewBag.currentPuzzle = team.CurrentPuzzleId ?? tour.Puzzle1Id;
 
             return View(tour);
         }

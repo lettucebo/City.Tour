@@ -32,9 +32,7 @@
     <!-- TODO 依據程式換圖 要換成謎題內容-->
     <div class="story-content" id="story-content">
         <div class="scrollbar-inner">
-            @Model.Name
-            <hr />
-            @Model.Descript
+            @Html.Raw(Model.Descript)
         </div>
         <div class="main-pic-frame">
             <!-- TODO 從js 切換亮燈 -->
