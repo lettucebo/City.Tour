@@ -52,3 +52,7 @@
 	width:90%;
 	margin:10px;
 }
+
+#body .ui-dialog .ui-dialog-titlebar-close{
+    -webkit-appearance: checkbox;
+}
