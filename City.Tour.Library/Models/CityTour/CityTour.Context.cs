@@ -30,6 +30,7 @@ namespace City.Tour.Library.Models.CityTour
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<TeamRecord> TeamRecords { get; set; }
         public virtual DbSet<Team> Teams { get; set; }
+        public virtual DbSet<TeamProgress> TeamProgresses { get; set; }
         public virtual DbSet<Puzzle> Puzzles { get; set; }
     }
 }

@@ -41,7 +41,6 @@ namespace City.Tour.Library.Models.CityTour
         public Nullable<double> Longitude { get; set; }
         public Nullable<double> Latitude { get; set; }
         public string MapNameImage { get; set; }
-        public bool IsPassMap { get; set; }
         public string Answer { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

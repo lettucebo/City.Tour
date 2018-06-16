@@ -15,7 +15,7 @@ function detectmob() {
 }
 
 if(!detectmob()){
-	alert("請使用手機瀏覽！");
+	//alert("請使用手機瀏覽！");
 }
 
 window.addEventListener("orientationchange",onOrientationchange ,false);

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
 using Ci.Extension;
@@ -26,7 +27,9 @@ namespace City.Tour.Web.Controllers
             if (tour == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "找不到 Tour");
 
-            ViewBag.currentPuzzle = team.CurrentPuzzleId ?? tour.Puzzle1Id;
+
+
+            ViewBag.currentPuzzle = team.CurrentPuzzleId;
 
             return View(tour);
         }
@@ -37,7 +40,44 @@ namespace City.Tour.Web.Controllers
             if (puzzle == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "找不到 puzzle");
 
-            if (puzzle.IsPassMap)
+            var teamId = new Guid(((ClaimsPrincipal)User).FindFirst("TeamId").Value ?? Guid.Empty.ToString());
+            var team = teamService.GetById(teamId);
+            var tour = team.Tour;
+            var record = team.TeamRecords.First();
+
+            // 檢查是否已經為目前最新進度，若非則跳轉
+            if (team.CurrentPuzzleId != puzzle.Id)
+            {
+                return RedirectToAction("PuzzleMap", "Tour", new { puzzleId });
+            }
+
+            if (team.IsComplete)
+            {
+                return RedirectToAction("Complete", "Tour");
+            }
+
+            // 判斷是否已經通過地圖
+            if (puzzleId == tour.Puzzle1Id && record.IsPassPuzzle1Map)
+            {
+                return RedirectToAction("Puzzle", "Tour", new { puzzleId });
+            }
+            else if (puzzleId == tour.Puzzle2Id && record.IsPassPuzzle2Map)
+            {
+                return RedirectToAction("Puzzle", "Tour", new { puzzleId });
+            }
+            else if (puzzleId == tour.Puzzle3Id && record.IsPassPuzzle3Map)
+            {
+                return RedirectToAction("Puzzle", "Tour", new { puzzleId });
+            }
+            else if (puzzleId == tour.Puzzle4Id && record.IsPassPuzzle4Map)
+            {
+                return RedirectToAction("Puzzle", "Tour", new { puzzleId });
+            }
+            else if (puzzleId == tour.Puzzle5Id && record.IsPassPuzzle5Map)
+            {
+                return RedirectToAction("Puzzle", "Tour", new { puzzleId });
+            }
+            else if (puzzleId == tour.Puzzle6Id && record.IsPassPuzzle6Map)
             {
                 return RedirectToAction("Puzzle", "Tour", new { puzzleId });
             }
@@ -52,9 +92,11 @@ namespace City.Tour.Web.Controllers
             if (puzzle == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "找不到 puzzle");
 
-            if (!answer.IsNullOrWhiteSpace() && answer.Trim() == puzzle.MapAnswer.Trim())
+            var teamId = new Guid(((ClaimsPrincipal)User).FindFirst("TeamId").Value ?? Guid.Empty.ToString());
+
+            if (!answer.IsNullOrWhiteSpace() && answer.ToUpper().Trim() == puzzle.MapAnswer.ToUpper().Trim())
             {
-                puzzleService.SetPassMap(puzzleId);
+                puzzleService.SetPassMap(puzzleId, teamId);
                 return RedirectToAction("Puzzle", "Tour", new { puzzleId });
             }
 
@@ -68,25 +110,84 @@ namespace City.Tour.Web.Controllers
             if (puzzle == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "找不到 puzzle");
 
-            if (!puzzle.IsPassMap)
+            var teamId = new Guid(((ClaimsPrincipal)User).FindFirst("TeamId").Value ?? Guid.Empty.ToString());
+            var team = teamService.GetById(teamId);
+            var tour = team.Tour;
+            var record = team.TeamRecords.First();
+
+            // 檢查是否已經為目前最新進度，若非則跳轉
+            if (team.CurrentPuzzleId != puzzle.Id)
+            {
                 return RedirectToAction("PuzzleMap", "Tour", new { puzzleId });
+            }
+
+            if (team.IsComplete)
+            {
+                return RedirectToAction("Complete", "Tour");
+            }
+
+            // 判斷是否已經通過地圖
+            if (puzzleId == tour.Puzzle1Id && !record.IsPassPuzzle1Map)
+            {
+                return RedirectToAction("PuzzleMap", "Tour", new { puzzleId });
+            }
+            else if (puzzleId == tour.Puzzle2Id && !record.IsPassPuzzle2Map)
+            {
+                return RedirectToAction("PuzzleMap", "Tour", new { puzzleId });
+            }
+            else if (puzzleId == tour.Puzzle3Id && !record.IsPassPuzzle3Map)
+            {
+                return RedirectToAction("PuzzleMap", "Tour", new { puzzleId });
+            }
+            else if (puzzleId == tour.Puzzle4Id && !record.IsPassPuzzle4Map)
+            {
+                return RedirectToAction("PuzzleMap", "Tour", new { puzzleId });
+            }
+            else if (puzzleId == tour.Puzzle5Id && !record.IsPassPuzzle5Map)
+            {
+                return RedirectToAction("PuzzleMap", "Tour", new { puzzleId });
+            }
+            else if (puzzleId == tour.Puzzle6Id && !record.IsPassPuzzle6Map)
+            {
+                return RedirectToAction("PuzzleMap", "Tour", new { puzzleId });
+            }
+
+            ViewBag.hints = puzzle.Hints.ToArray();
 
             return View(puzzle);
         }
 
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Puzzle(Guid puzzleId, string answer)
         {
             var puzzle = puzzleService.GetById(puzzleId);
             if (puzzle == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "找不到 puzzle");
 
-            if (!puzzle.IsPassMap)
-                return RedirectToAction("PuzzleMap", "Tour", new { puzzleId });
+            var teamId = new Guid(((ClaimsPrincipal)User).FindFirst("TeamId").Value ?? Guid.Empty.ToString());
 
+            if (!answer.IsNullOrWhiteSpace() && answer.ToUpper().Trim() == puzzle.Answer.ToUpper().Trim())
+            {
+                var nextPuzzleId = puzzleService.SetNextPuzzle(puzzleId, teamId);
+                if (nextPuzzleId == Guid.Empty)
+                {
+                    // 代表已通關
+                    return RedirectToAction("Complete", "Tour");
+                }
+
+                this.SetAlert("答案正確！");
+                return RedirectToAction("PuzzleMap", "Tour", new { puzzleId = nextPuzzleId });
+            }
+
+            this.SetAlert("答案錯誤，請再試一次！");
             return View(puzzle);
+        }
+
+        public ActionResult Complete(Guid teamId)
+        {
+            teamService.SetComplete(teamId);
+            return View();
         }
     }
 }

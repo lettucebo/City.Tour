@@ -114,12 +114,15 @@
                 FB.api("/me",
                     { locale: "zh_TW", fields: "id, name, email" },
                     function (response) {
+
+                        bootbox.alert("登入中，請稍後...");
                         console.log(response.id);
                         console.log(response.email);
                         console.log(response.name);
 
                         var teamCode = $("#teamCode").val();
                         if (teamCode == undefined || teamCode == "") {
+                            bootbox.hideAll();
                             bootbox.alert("請輸入團隊碼！");
                             return;
                         }
@@ -154,7 +157,7 @@
 
         var team_id = qs('team');
         $('#teamCode').val(team_id);
-        if (team_id.length > 0) {
+        if (team_id != undefined && team_id.length > 0) {
             $('#teamCode').attr('readonly', 'readonly');
         }
     </script>

@@ -1,7 +1,9 @@
-﻿@model City.Tour.Library.Models.CityTour.Puzzle
+﻿@using City.Tour.Library.Models.CityTour
+@model City.Tour.Library.Models.CityTour.Puzzle
 @{
     ViewBag.Title = "Puzzle";
     Layout = "~/Views/Shared/_LayoutCustom.cshtml";
+    Hint[] hints = ViewBag.hints;
 }
 
 @section contents
@@ -57,9 +59,12 @@
 <!-- 輸入答案 -->
 <div id="dialog" title="請解答！" class="dialog">
     <!-- TODO 設定送出位址 -->
-    <form id="form" action="#" method="POST" accept-charset="utf-8">
-        <input class="input" type="text" name="ans" placeholder="輸入答案" />
-    </form>
+    @using (Html.BeginForm())
+    {
+        <input class="input" type="text" name="answer" placeholder="輸入答案" />
+        <br />
+        <button type="submit" class="btn btn-primary float-right">送出</button>
+    }
 </div>
 <div id="fail-dialog" class="dialog">
     <div class="fail-dialog">
@@ -120,21 +125,15 @@
             var isActiveElem = jQuery(this).find('.active');
             if (isActiveElem.length > 0) {
 
-                /*TODO 先把不同的等級蛋蛋塞入提示訊息*/
-                if (isActiveElem.hasClass('active5')) {
 
-                } else if (isActiveElem.hasClass('active4')) {
-
-                } else if (isActiveElem.hasClass('active3')) {
-
-                } else if (isActiveElem.hasClass('active2')) {
-
-                } else if (isActiveElem.hasClass('active1')) {
-
+                @for (int i = 0; i < hints.Length; i++)
+                {
+                    <text>
+                        if (isActiveElem.hasClass('active' + '@i')) {
+                            bootbox.alert('@(hints[i].Content?.Replace("\r\n",""))');
+                        }
+                    </text>
                 }
-
-                /*TODO 跳出提示*/
-                alert('提示訊息');
             }
         });
 

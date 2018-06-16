@@ -19,6 +19,7 @@ namespace City.Tour.Library.Models.CityTour
         {
             this.TeamRecords = new HashSet<TeamRecord>();
             this.Users = new HashSet<User>();
+            this.TeamProgresses = new HashSet<TeamProgress>();
         }
     
         public System.Guid Id { get; set; }
@@ -28,12 +29,15 @@ namespace City.Tour.Library.Models.CityTour
         public System.Guid TourId { get; set; }
         public Nullable<System.Guid> CurrentPuzzleId { get; set; }
         public int CurrentPuzzleNum { get; set; }
+        public bool IsComplete { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TeamRecord> TeamRecords { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User> Users { get; set; }
         public virtual Tour Tour { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TeamProgress> TeamProgresses { get; set; }
         public virtual Puzzle Puzzle { get; set; }
     }
 }

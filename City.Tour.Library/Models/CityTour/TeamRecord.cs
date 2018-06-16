@@ -40,6 +40,8 @@ namespace City.Tour.Library.Models.CityTour
         public Nullable<System.DateTime> PassPuzzle4MapTime { get; set; }
         public Nullable<System.DateTime> PassPuzzle5MapTime { get; set; }
         public Nullable<System.DateTime> PassPuzzle6MapTime { get; set; }
+        public System.DateTime CreateTime { get; set; }
+        public System.DateTime ModifyTime { get; set; }
     
         public virtual Team Team { get; set; }
     }

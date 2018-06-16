@@ -22,6 +22,11 @@ namespace City.Tour.Service
             db = new CityTourEntities();
         }
 
+        public TourService(CityTourEntities ctx)
+        {
+            db = ctx;
+        }
+
         public IPagedList<Library.Models.CityTour.Tour> ListAllToPagedAndFilterSort(string keyword = "", SortOrder sort = null, int page = 1, int pageSize = 10)
         {
             var query = db.Tours.Where(x => x.IsDelete == false);

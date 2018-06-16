@@ -1,4 +1,5 @@
 ﻿@using System.Web.UI.WebControls
+@using Ci.Extension
 @using Ci.Mvc.Alert
 @model City.Tour.Library.Models.CityTour.Puzzle
 @{
@@ -56,11 +57,11 @@
                 <div class="msec" id="total-timer-msec"><div class="first"></div><div class="last"></div></div>
             </div>
         </div>
-        <a href="@($"http://maps.google.com/maps?daddr={Model.Latitude},{Model.Longitude}&amp;ll=")" target="_blank">
-            <img class="map-content-pic" src="@Url.Content(Model.MapNameImage)" />
-        </a>
         <div class="map-pic-frame">
-            <img class="map-pic" src="@Url.Content(Model.MapImage)" />
+            @if (!Model.MapImage.IsNullOrWhiteSpace())
+            {
+                <img class="map-pic" src="@Url.Content(Model.MapImage)" />
+            }
         </div>
     </div>
     <footer class="main-footer">
@@ -73,7 +74,7 @@
         @using (Html.BeginForm())
         {
             <input type="text" name="answer" class="form-control" placeholder="輸入答案" />
-            <br/>
+            <br />
             <button type="submit" class="btn btn-primary float-right">送出</button>
         }
     </div>

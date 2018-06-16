@@ -384,7 +384,7 @@
     <Content Include="Areas\Admins\Views\Answer\Edit.cshtml" />
     <Content Include="Scripts\axios.min.map" />
     <Content Include="Scripts\axios.map" />
-    <None Include="Properties\PublishProfiles\CityTourScount - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\CityTourScout - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
