@@ -119,7 +119,7 @@
         setTimesupPrompt(promptFunc);
 
         /*點擊提示的蛋蛋出現的提示，目前用alert*/
-        $('#main-pic-frame .main-pic-egg').on('click', function () {
+        $('#main-pic-frame').on('click', function () {
 
             /*要有active 點擊了才有效果*/
             var isActiveElem = jQuery(this).find('.active');
