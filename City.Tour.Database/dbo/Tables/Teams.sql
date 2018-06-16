@@ -6,12 +6,20 @@
     [TourId]           UNIQUEIDENTIFIER NOT NULL,
     [CurrentPuzzleId]  UNIQUEIDENTIFIER NULL,
     [CurrentPuzzleNum] INT              CONSTRAINT [DF_Teams_CurrentPuzzleNum] DEFAULT ((1)) NOT NULL,
+    [IsComplete]       BIT              CONSTRAINT [DF_Teams_IsComplete] DEFAULT ((0)) NOT NULL,
     CONSTRAINT [PK_Teams] PRIMARY KEY CLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_Teams_Puzzles] FOREIGN KEY ([CurrentPuzzleId]) REFERENCES [dbo].[Puzzles] ([Id]),
     CONSTRAINT [FK_Teams_Tours] FOREIGN KEY ([TourId]) REFERENCES [dbo].[Tours] ([Id])
 );
+
+
 
 
 GO
 CREATE NONCLUSTERED INDEX [IX_FK_Teams_Tours]
     ON [dbo].[Teams]([TourId] ASC);
+
+
+GO
+EXECUTE sp_addextendedproperty @name = N'MS_Description', @value = N'是否完成', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'TABLE', @level1name = N'Teams', @level2type = N'COLUMN', @level2name = N'IsComplete';
 

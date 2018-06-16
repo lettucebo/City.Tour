@@ -25,9 +25,13 @@
     [PassPuzzle4MapTime]  DATETIME         NULL,
     [PassPuzzle5MapTime]  DATETIME         NULL,
     [PassPuzzle6MapTime]  DATETIME         NULL,
+    [CreateTime]          DATETIME         CONSTRAINT [DF_TeamRecords_CreateTime] DEFAULT (getdate()) NOT NULL,
+    [ModifyTime]          DATETIME         CONSTRAINT [DF_TeamRecords_ModifyTime] DEFAULT (getdate()) NOT NULL,
     CONSTRAINT [PK_TeamRecord] PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [FK_TeamRecord_Teams] FOREIGN KEY ([TeamId]) REFERENCES [dbo].[Teams] ([Id])
 );
+
+
 
 
 GO

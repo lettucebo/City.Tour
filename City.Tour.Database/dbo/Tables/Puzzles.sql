@@ -13,13 +13,19 @@
     [Longitude]    FLOAT (53)       NULL,
     [Latitude]     FLOAT (53)       NULL,
     [MapNameImage] NVARCHAR (500)   NULL,
-    [IsPassMap]    BIT              CONSTRAINT [DF_Puzzles_IsPassMap] DEFAULT ((0)) NOT NULL,
+    [Answer]       NVARCHAR (MAX)   NULL,
     CONSTRAINT [PK_Puzzles] PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [FK_Puzzles_Tours] FOREIGN KEY ([TourId]) REFERENCES [dbo].[Tours] ([Id])
 );
 
 
+
+
 GO
 CREATE NONCLUSTERED INDEX [IX_FK_Puzzles_Tours]
     ON [dbo].[Puzzles]([TourId] ASC);
+
+
+GO
+EXECUTE sp_addextendedproperty @name = N'MS_Description', @value = N'謎題列表', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'TABLE', @level1name = N'Puzzles', @level2type = N'COLUMN', @level2name = N'Id';
 

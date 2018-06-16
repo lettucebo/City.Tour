@@ -68,5 +68,6 @@
     <Build Include="dbo\Tables\Puzzles.sql" />
     <Build Include="dbo\Tables\Hints.sql" />
     <Build Include="dbo\Tables\Answers.sql" />
+    <Build Include="dbo\Tables\TeamProgresses.sql" />
   </ItemGroup>
 </Project>
