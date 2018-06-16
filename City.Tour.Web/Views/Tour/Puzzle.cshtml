@@ -36,7 +36,7 @@
         <div class="scrollbar-inner">
             @Html.Raw(Model.Descript)
         </div>
-        <div class="main-pic-frame">
+        <div class="main-pic-frame" id="main-pic-frame">
             <!-- TODO 從js 切換亮燈 -->
             <img class="main-pic-egg" src="~/Images/main-egg.png" />
 
@@ -119,7 +119,7 @@
         setTimesupPrompt(promptFunc);
 
         /*點擊提示的蛋蛋出現的提示，目前用alert*/
-        $('#main-pic-frame').on('click', function () {
+        $('#main-pic-frame .main-pic-egg').on('click', function () {
 
             /*要有active 點擊了才有效果*/
             var isActiveElem = jQuery(this).find('.active');
