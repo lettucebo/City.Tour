@@ -124,16 +124,20 @@
             /*要有active 點擊了才有效果*/
             var isActiveElem = jQuery(this).find('.active');
             if (isActiveElem.length > 0) {
+                var msg = "";
 
 
                 @for (int i = 0; i < hints.Length; i++)
                 {
                     <text>
                         if (isActiveElem.hasClass('active' + '@i')) {
-                            bootbox.alert('@(hints[i].Content?.Replace("\r\n",""))');
+                            msg += '@(hints[i].Content?.Replace("\r\n",""))';
+                            msg += "\n";
                         }
                     </text>
                 }
+
+                bootbox.alert(msg);
             }
         });
 
