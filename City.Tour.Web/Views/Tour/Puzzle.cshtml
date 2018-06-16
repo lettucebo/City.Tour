@@ -8,7 +8,7 @@
 
 @section contents
 {
-    <link rel="stylesheet" href="~/Content/main-game.css?ver=1.4">
+    <link rel="stylesheet" href="~/Content/main-game.css?ver=1.5">
 
 }
 
@@ -145,7 +145,7 @@
         /*設定高度*/
         var maxHeight = $(window).height();
         maxHeight = maxHeight - jQuery('.main-header').height() - jQuery('.main-footer').height();
-        $('.scrollbar-inner').css('height', maxHeight - 60);
+        $('.scrollbar-inner').css('height', maxHeight - 15);
         $('.scrollbar-inner').css('margin-top', '10px');
 
         /*TODO 設定時間 請把 getDemoTime() 換成 microseconds 或是時間字串*/
@@ -154,7 +154,7 @@
         var callback = function () {
             /*TODO 設定時間到 call back*/
             setEgg(0);
-            alert('時間到！請直接看答案喔！');
+            alert('時間到，請點擊金蛋看最後提示');
         }
 
         setTime(time);
@@ -201,11 +201,6 @@
                 effect: "explode",
                 duration: 0
             },
-            buttons: {
-                "送出": function () {
-                    $('#form').submit();
-                }
-            }
         });
 
         /*TODO 如果答案正確*/

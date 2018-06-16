@@ -1,5 +1,6 @@
 .body_bg .content .scrollbar-inner{
 	overflow: auto;
+    padding-bottom: 30px;
 }
 
 .body_bg .content .scrollbar-inner *{
@@ -27,6 +28,7 @@
 }
 
 .main-footer .main-pic-frame{
+    margin-top: -45px;
 }
 
 .content .main-pic-frame .main-pic-egg{
