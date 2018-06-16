@@ -14,7 +14,7 @@ function setEgg(level){
 	if(level > 0){
 		elem.addClass('active');
 		//更改蛋蛋等級的圖
-		elem.attr('src', '/assets/imgs/main-egg-active'+level+'.png');
+		elem.attr('src', '/Images/main-egg-active'+level+'.png');
 		elem.addClass('active' + level);
 	}
 }
