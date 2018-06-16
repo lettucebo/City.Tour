@@ -2,6 +2,10 @@
 	overflow: auto;
 }
 
+.body_bg .content .scrollbar-inner *{
+    max-width:100%;
+}
+
 .body_bg .content .main-content-pic{
 	width: 100%;
 }
