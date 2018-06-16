@@ -29,7 +29,8 @@ namespace City.Tour.Web.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                var teamId = new Guid(((ClaimsPrincipal)User).FindFirst("TeamId").Value ?? Guid.Empty.ToString());
+                return RedirectToAction("Index", "Tour", new { teamId = teamId });
             }
 
             return View();

@@ -14,7 +14,7 @@ namespace City.Tour.Web.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("Login", "Account");
         }
 
         public ActionResult Story()
