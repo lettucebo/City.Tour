@@ -4,6 +4,12 @@
 
 .body_bg .content .scrollbar-inner *{
     max-width:100%;
+    
+}
+
+.body_bg .content .scrollbar-inner img{
+
+    height: initial !important;
 }
 
 .body_bg .content .scrollbar-inner iframe{
