@@ -82,5 +82,17 @@ namespace City.Tour.Service
                 conn.Execute(sql, new { teamId });
             }
         }
+
+        /// <summary>
+        /// 設定開始 Tour
+        /// </summary>
+        /// <param name="teamId"></param>
+        public void SetTourStart(Guid teamId)
+        {
+            var team = GetById(teamId);
+            var record = team.TeamRecords.First();
+            record.Puzzle1StartTime = DateTime.Now;
+            db.SaveChanges();
+        }
     }
 }

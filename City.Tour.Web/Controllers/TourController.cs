@@ -45,6 +45,13 @@ namespace City.Tour.Web.Controllers
             var tour = team.Tour;
             var record = team.TeamRecords.First();
 
+            if (puzzle.Id == tour.Puzzle1Id && !record.Puzzle1StartTime.HasValue)
+            {
+                // 設定 puzzle 1 開始時間
+                teamService.SetTourStart(teamId);
+
+            }
+
             // 檢查是否已經為目前最新進度，若非則跳轉
             if (team.CurrentPuzzleId != puzzle.Id)
             {
