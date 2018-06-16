@@ -18,6 +18,9 @@
     max-height:100px;
     display: block;
 }
+.body_bg .content .scrollbar-inner h1{
+    text-align: center;
+}
 
 .body_bg .content .main-content-pic{
 	width: 100%;
