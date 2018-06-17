@@ -76,7 +76,7 @@ namespace City.Tour.Service
         /// <param name="teamId"></param>
         public void SetComplete(Guid teamId)
         {
-            string sql = "UPDATE Teams SET IsComplete = 1 WHERE TeamId = @teamId";
+            string sql = "UPDATE Teams SET IsComplete = 1 WHERE Id = @teamId";
             using (var conn = new SqlConnection(CityTourConnStr))
             {
                 conn.Execute(sql, new { teamId });

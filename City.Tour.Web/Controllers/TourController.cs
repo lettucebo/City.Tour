@@ -60,7 +60,7 @@ namespace City.Tour.Web.Controllers
 
             if (team.IsComplete)
             {
-                return RedirectToAction("Complete", "Tour");
+                return RedirectToAction("Complete", "Tour", new { teamId });
             }
 
             // 判斷是否已經通過地圖
@@ -130,7 +130,7 @@ namespace City.Tour.Web.Controllers
 
             if (team.IsComplete)
             {
-                return RedirectToAction("Complete", "Tour");
+                return RedirectToAction("Complete", "Tour", new { teamId });
             }
 
             // 判斷是否已經通過地圖
@@ -180,7 +180,7 @@ namespace City.Tour.Web.Controllers
                 if (nextPuzzleId == Guid.Empty)
                 {
                     // 代表已通關
-                    return RedirectToAction("Complete", "Tour");
+                    return RedirectToAction("Complete", "Tour", new { teamId });
                 }
 
                 this.SetAlert("答案正確！");
