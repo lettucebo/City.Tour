@@ -95,7 +95,7 @@ namespace City.Tour.Web.Controllers
 
             // todo 設定到期時間
 
-            this.SetAlert("答案錯誤，請再試一次！");
+            this.SetAlert("可能要仔細再想想，就差那臨門一腳了！");
             return View(puzzle);
         }
 

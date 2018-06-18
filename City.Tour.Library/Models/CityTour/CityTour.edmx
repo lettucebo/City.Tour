@@ -36,6 +36,7 @@
           <Property Name="Latitude" Type="float" />
           <Property Name="MapNameImage" Type="nvarchar" MaxLength="500" />
           <Property Name="Answer" Type="nvarchar(max)" />
+          <Property Name="VideoContentId" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="TeamRecords">
           <Key>
@@ -325,6 +326,7 @@
           <NavigationProperty Name="Hints" Relationship="CityTourModel.FK_Hints_Puzzles" FromRole="Puzzle" ToRole="Hint" />
           <NavigationProperty Name="Tour" Relationship="CityTourModel.FK_Puzzles_Tours" FromRole="Puzzle" ToRole="Tour" />
           <NavigationProperty Name="TourPuzzles" Relationship="CityTourModel.FK_TourPuzzles_Puzzles1" FromRole="Puzzle" ToRole="TourPuzzle" />
+          <Property Name="VideoContentId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="TourPuzzle">
           <Key>
@@ -527,6 +529,7 @@
           <EntitySetMapping Name="Puzzles">
             <EntityTypeMapping TypeName="CityTourModel.Puzzle">
               <MappingFragment StoreEntitySet="Puzzles">
+                <ScalarProperty Name="VideoContentId" ColumnName="VideoContentId" />
                 <ScalarProperty Name="Answer" ColumnName="Answer" />
                 <ScalarProperty Name="MapNameImage" ColumnName="MapNameImage" />
                 <ScalarProperty Name="Latitude" ColumnName="Latitude" />
