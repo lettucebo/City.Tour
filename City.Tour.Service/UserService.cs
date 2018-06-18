@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,7 +21,7 @@ namespace City.Tour.Service
 
         public User CheckOrCreate(User model)
         {
-            var data = db.Users.FirstOrDefault(x => x.ProfileId == model.ProfileId);
+            var data = db.Users.Include(x => x.Team).FirstOrDefault(x => x.ProfileId == model.ProfileId);
             if (data == null)
             {
                 data = model;

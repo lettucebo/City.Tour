@@ -137,9 +137,14 @@
                                 Name: response.name,
                                 TeamCode: teamCode
                             }).then(function (response) {
-                                location.href = response.data;
+                                if (!response.data.startsWith("http")) {
+                                    bootbox.alert(response.data);
+                                }
+                                else {
+                                    location.href = response.data;
+                                }
                             }).catch(function (error) {
-                                console.log(error);
+                                console.log(error.response);
                             });
                     }
                 );

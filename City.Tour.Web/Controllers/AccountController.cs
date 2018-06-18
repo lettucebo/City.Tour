@@ -41,18 +41,18 @@ namespace City.Tour.Web.Controllers
         public ActionResult FbLogin(User model, string teamCode)
         {
             if (teamCode.IsNullOrWhiteSpace())
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "找不到團隊資料");
+                return Json($"邀請碼不可為空白");
 
             var team = teamService.GetByInviteCode(teamCode);
             if (team == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "找不到團隊資料");
+                return Json($"邀請碼：{teamCode}，找不到團隊資料");
 
             model.Source = "Facebook";
             model.TeamId = team.Id;
             var user = userService.CheckOrCreate(model);
 
             if (user.TeamId != team.Id)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, $"此帳號已綁定團隊: {team.Name}");
+                return Json($"此帳號已綁定團隊: {user.Team.Name}");
 
             IdentityService.Authentication(AuthenticationManager, user);
 
