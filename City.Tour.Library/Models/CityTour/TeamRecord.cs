@@ -16,33 +16,16 @@ namespace City.Tour.Library.Models.CityTour
     {
         public System.Guid Id { get; set; }
         public System.Guid TeamId { get; set; }
-        public Nullable<System.DateTime> Puzzle1StartTime { get; set; }
-        public Nullable<System.DateTime> Puzzle1CompleteTime { get; set; }
-        public Nullable<System.DateTime> Puzzle2StartTime { get; set; }
-        public Nullable<System.DateTime> Puzzle2CompleteTime { get; set; }
-        public Nullable<System.DateTime> Puzzle3StartTime { get; set; }
-        public Nullable<System.DateTime> Puzzle3CompleteTime { get; set; }
-        public Nullable<System.DateTime> Puzzle4StartTime { get; set; }
-        public Nullable<System.DateTime> Puzzle4CompleteTime { get; set; }
-        public Nullable<System.DateTime> Puzzle5StartTime { get; set; }
-        public Nullable<System.DateTime> Puzzle5CompleteTime { get; set; }
-        public Nullable<System.DateTime> Puzzle6StartTime { get; set; }
-        public Nullable<System.DateTime> Puzzle6CompleteTime { get; set; }
-        public bool IsPassPuzzle1Map { get; set; }
-        public bool IsPassPuzzle2Map { get; set; }
-        public bool IsPassPuzzle3Map { get; set; }
-        public bool IsPassPuzzle4Map { get; set; }
-        public bool IsPassPuzzle5Map { get; set; }
-        public bool IsPassPuzzle6Map { get; set; }
-        public Nullable<System.DateTime> PassPuzzle1MapTime { get; set; }
-        public Nullable<System.DateTime> PassPuzzle2MapTime { get; set; }
-        public Nullable<System.DateTime> PassPuzzle3MapTime { get; set; }
-        public Nullable<System.DateTime> PassPuzzle4MapTime { get; set; }
-        public Nullable<System.DateTime> PassPuzzle5MapTime { get; set; }
-        public Nullable<System.DateTime> PassPuzzle6MapTime { get; set; }
+        public System.DateTime PuzzleStartTime { get; set; }
+        public Nullable<System.DateTime> PuzzleCompleteTime { get; set; }
+        public bool IsPassPuzzleMap { get; set; }
+        public Nullable<System.DateTime> PassPuzzleMapTime { get; set; }
         public System.DateTime CreateTime { get; set; }
         public System.DateTime ModifyTime { get; set; }
+        public int Sort { get; set; }
+        public System.Guid TourPuzzleId { get; set; }
     
+        public virtual TourPuzzle TourPuzzle { get; set; }
         public virtual Team Team { get; set; }
     }
 }
