@@ -18,13 +18,11 @@ namespace City.Tour.Service
     {
         private CityTourEntities db;
         private TeamService teamService;
-        private TourService tourService;
 
         public PuzzleService()
         {
             db = new CityTourEntities();
             teamService = new TeamService(db);
-            tourService = new TourService(db);
         }
 
         public IPagedList<Puzzle> ListAllToPagedAndFilterSort(Guid tourId, string keyword = "", SortOrder sort = null, int page = 1, int pageSize = 10)
@@ -135,9 +133,20 @@ namespace City.Tour.Service
             }
 
             // 設定下一關資訊
+            var newRecord = new TeamRecord();
+            newRecord.Id = Ci.Sequential.Guid.Create();
+            newRecord.TeamId = team.Id;
+            newRecord.CreateTime = DateTime.Now;
+            newRecord.ModifyTime = DateTime.Now;
+            newRecord.PuzzleStartTime = DateTime.Now;
+            newRecord.TourPuzzleId = nextTourPuzzle.Id;
+            newRecord.Sort = nextTourPuzzle.Sort;
+            team.TeamRecords.Add(newRecord);
+
             team.CurrentTourPuzzleSort = nextTourPuzzle.Sort;
             team.CurrentPuzzleId = nextTourPuzzle.PuzzleId;
             team.CurrentTourPuzzleId = nextTourPuzzle.Id;
+
             db.SaveChanges();
 
             return team.CurrentPuzzleId.Value;

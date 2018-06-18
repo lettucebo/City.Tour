@@ -19,6 +19,11 @@ namespace City.Tour.Service
             db = new CityTourEntities();
         }
 
+        /// <summary>
+        /// 若已有使用者直接回傳，沒有則新增後回傳
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public User CheckOrCreate(User model)
         {
             var data = db.Users.Include(x => x.Team).FirstOrDefault(x => x.ProfileId == model.ProfileId);

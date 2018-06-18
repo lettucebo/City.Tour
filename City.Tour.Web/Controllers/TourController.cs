@@ -23,11 +23,17 @@ namespace City.Tour.Web.Controllers
         {
             var team = teamService.GetByIdIncludeAll(teamId);
 
-            var tour = tourService.GetById(team.TourId);
+            var tour = team.Tour;
             if (tour == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "找不到 Tour");
-
-            ViewBag.currentPuzzleId = team.TeamRecords.OrderByDescending(x => x.Sort).First().TourPuzzle.PuzzleId;
+            if (team.TeamRecords.Any())
+            {
+                ViewBag.currentPuzzleId = team.TeamRecords.OrderByDescending(x => x.Sort).First().TourPuzzle.PuzzleId;
+            }
+            else
+            {
+                ViewBag.currentPuzzleId = team.Tour.TourPuzzles.OrderBy(x => x.Sort).First().PuzzleId;
+            }
 
             return View(tour);
         }
@@ -40,7 +46,6 @@ namespace City.Tour.Web.Controllers
 
             var teamId = new Guid(((ClaimsPrincipal)User).FindFirst("TeamId").Value ?? Guid.Empty.ToString());
             var team = teamService.GetByIdIncludeAll(teamId);
-            var tour = team.Tour;
             var teamRecord = team.TeamRecords;
 
             // 檢查是否已經有任何紀錄，若沒有則代表全新開始，寫入第一題記錄與開始時間
@@ -52,7 +57,7 @@ namespace City.Tour.Web.Controllers
             // 檢查是否已經為目前最新進度，若非則跳轉
             if (team.CurrentPuzzleId != puzzle.Id)
             {
-                return RedirectToAction("PuzzleMap", "Tour", new { puzzleId });
+                return RedirectToAction("PuzzleMap", "Tour", new { puzzleId = team.CurrentPuzzleId });
             }
 
             if (team.IsComplete)

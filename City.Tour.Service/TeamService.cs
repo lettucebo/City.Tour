@@ -92,16 +92,20 @@ namespace City.Tour.Service
 
             if (!team.CurrentPuzzleId.HasValue)
             {
+                var firstTourPuzzle = tourPuzzles.OrderBy(x => x.Sort).First();
                 var record = new TeamRecord();
                 record.Id = Ci.Sequential.Guid.Create();
                 record.TeamId = team.Id;
                 record.CreateTime = DateTime.Now;
                 record.ModifyTime = DateTime.Now;
                 record.PuzzleStartTime = DateTime.Now;
-                record.TourPuzzleId = tourPuzzles.First(x => x.Sort == 1).Id;
+                record.TourPuzzleId = firstTourPuzzle.Id;
+                record.Sort = firstTourPuzzle.Sort;
                 team.TeamRecords.Add(record);
 
                 team.CurrentPuzzleId = tourPuzzles.First(x => x.Sort == 1).PuzzleId;
+                team.CurrentTourPuzzleId = firstTourPuzzle.Id;
+                team.CurrentTourPuzzleSort = firstTourPuzzle.Sort;
             }
             else
             {
