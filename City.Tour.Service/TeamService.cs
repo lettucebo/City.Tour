@@ -116,5 +116,34 @@ namespace City.Tour.Service
 
             return team.CurrentPuzzleId.Value;
         }
+
+        public void DeleteTeamRecordByTeamCode(string teamCode)
+        {
+            var team = GetByInviteCode(teamCode);
+            if (team == null)
+                return;
+            string sql = @"
+                            DELETE FROM TeamRecords WHERE TeamId = @teamId;
+                            UPDATE Teams SET [CurrentTourPuzzleSort] = 1, [CurrentPuzzleId] = NULL, [CurrentTourPuzzleId] = NULL WHERE Id = @teamId;
+                            ";
+
+            using (var conn = new SqlConnection(CityTourConnStr))
+            {
+                conn.Execute(sql, new { teamId = team.Id });
+            }
+        }
+
+        public void DeleteTeamMemberByTeamCode(string teamCode)
+        {
+            var team = GetByInviteCode(teamCode);
+            if (team == null)
+                return;
+            string sql = @"DELETE FROM Users WHERE TeamId = @teamId;";
+
+            using (var conn = new SqlConnection(CityTourConnStr))
+            {
+                conn.Execute(sql, new { teamId = team.Id });
+            }
+        }
     }
 }

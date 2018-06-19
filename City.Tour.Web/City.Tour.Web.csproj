@@ -255,6 +255,7 @@
     <Compile Include="Areas\Admins\AdminsAreaRegistration.cs" />
     <Compile Include="Areas\Admins\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admins\Controllers\PuzzleController.cs" />
+    <Compile Include="Areas\Admins\Controllers\TeamController.cs" />
     <Compile Include="Areas\Admins\Controllers\TourController.cs" />
     <Compile Include="Base\BaseAdminController.cs" />
     <Compile Include="Base\BaseController.cs" />
@@ -447,7 +448,9 @@
     <Content Include="Views\Shared\_LayoutCustom.cshtml" />
     <Content Include="Views\Tour\Complete.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Areas\Admins\Views\Team\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
