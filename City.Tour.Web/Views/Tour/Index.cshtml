@@ -1,7 +1,7 @@
 ﻿@model City.Tour.Library.Models.CityTour.Tour
 @{
     Layout = "";
-    Guid currentPuzzle = ViewBag.currentPuzzle;
+    Guid currentPuzzleId = ViewBag.currentPuzzleId;
 }
 
 <!DOCTYPE html>
@@ -51,7 +51,7 @@
     <footer class="main-footer story">
         <!-- TODO 根據操作變換是要返回按鈕還是下一步地按鈕 -->
         <!-- 下一步按鈕 -->
-        <a href="@Url.Action("PuzzleMap","Tour",new {puzzleId = currentPuzzle})">
+        <a href="@Url.Action("PuzzleMap","Tour",new {puzzleId = currentPuzzleId})">
             <img class="go-btn" id="go-btn" src="~/Images/story-go-btn.png" />
         </a>
         <!-- 返回按鈕 -->
@@ -64,7 +64,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.js" integrity="sha256-tcqPYPyxU+Fsv5sVdvnxLYJ7Jq9wWpi4twZbtZ0ubY8=" crossorigin="anonymous"></script>
     <script src="~/Scripts/axios.min.js"></script>
 
-    <script src="~/Scripts/custom/main.js"></script>
+    <script src="~/Scripts/main.js"></script>
 
     <script>
 

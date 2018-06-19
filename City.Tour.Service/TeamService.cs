@@ -41,31 +41,26 @@ namespace City.Tour.Service
             db.Dispose();
         }
 
-        public Team GetById(Guid teamId)
+        /// <summary>
+        /// 根據 Id 取得團隊資訊
+        /// </summary>
+        /// <param name="teamId"></param>
+        /// <returns></returns>
+        public Team GetByIdIncludeAll(Guid teamId, bool isNoTracking = false)
         {
-            var data = db.Teams.Include(x => x.TeamRecords).Include(x => x.Tour).FirstOrDefault(x => x.Id == teamId);
+            var query = db.Teams
+                .Include(x => x.TeamRecords)
+                .Include(x => x.Tour)
+                .Include(x => x.Tour.TourPuzzles)
+                .Include(x => x.TeamRecords.Select(y => y.TourPuzzle))
+                .Where(x => x.Id == teamId);
 
-            if (data == null)
-                return null;
-
-            if (!data.CurrentPuzzleId.HasValue)
+            if (isNoTracking)
             {
-                data.CurrentPuzzleNum = 1;
-                data.CurrentPuzzleId = data.Tour.Puzzle1Id;
+                query = query.AsNoTracking();
             }
 
-            if (!data.TeamRecords.Any())
-            {
-                // 建立團隊進度紀錄列表紀錄
-                var record = new TeamRecord();
-                record.Id = Ci.Sequential.Guid.Create();
-                record.TeamId = data.Id;
-                record.CreateTime = DateTime.Now;
-                record.ModifyTime = DateTime.Now;
-                data.TeamRecords.Add(record);
-            }
-
-            db.SaveChanges();
+            var data = query.FirstOrDefault();
 
             return data;
         }
@@ -84,15 +79,42 @@ namespace City.Tour.Service
         }
 
         /// <summary>
-        /// 設定開始 Tour
+        /// 設定開始 Tour 計時
         /// </summary>
         /// <param name="teamId"></param>
-        public void SetTourStart(Guid teamId)
+        public Guid SetTeamStart(Guid teamId)
         {
-            var team = GetById(teamId);
-            var record = team.TeamRecords.First();
-            record.Puzzle1StartTime = DateTime.Now;
+            var team = GetByIdIncludeAll(teamId);
+            var tourPuzzles = team.Tour.TourPuzzles;
+            var records = team.TeamRecords;
+            if (team.CurrentPuzzleId.HasValue && records.Any())
+                return team.CurrentPuzzleId.Value;
+
+            if (!team.CurrentPuzzleId.HasValue)
+            {
+                var firstTourPuzzle = tourPuzzles.OrderBy(x => x.Sort).First();
+                var record = new TeamRecord();
+                record.Id = Ci.Sequential.Guid.Create();
+                record.TeamId = team.Id;
+                record.CreateTime = DateTime.Now;
+                record.ModifyTime = DateTime.Now;
+                record.PuzzleStartTime = DateTime.Now;
+                record.TourPuzzleId = firstTourPuzzle.Id;
+                record.Sort = firstTourPuzzle.Sort;
+                team.TeamRecords.Add(record);
+
+                team.CurrentPuzzleId = tourPuzzles.First(x => x.Sort == 1).PuzzleId;
+                team.CurrentTourPuzzleId = firstTourPuzzle.Id;
+                team.CurrentTourPuzzleSort = firstTourPuzzle.Sort;
+            }
+            else
+            {
+                team.CurrentPuzzleId = team.TeamRecords.OrderByDescending(x => x.Sort).First().TourPuzzle.PuzzleId;
+            }
+
             db.SaveChanges();
+
+            return team.CurrentPuzzleId.Value;
         }
     }
 }

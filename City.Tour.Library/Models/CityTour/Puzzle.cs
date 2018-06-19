@@ -18,13 +18,7 @@ namespace City.Tour.Library.Models.CityTour
         public Puzzle()
         {
             this.Hints = new HashSet<Hint>();
-            this.Teams = new HashSet<Team>();
-            this.Tours = new HashSet<Tour>();
-            this.Tours1 = new HashSet<Tour>();
-            this.Tours2 = new HashSet<Tour>();
-            this.Tours3 = new HashSet<Tour>();
-            this.Tours4 = new HashSet<Tour>();
-            this.Tours5 = new HashSet<Tour>();
+            this.TourPuzzles = new HashSet<TourPuzzle>();
         }
     
         public System.Guid Id { get; set; }
@@ -42,23 +36,12 @@ namespace City.Tour.Library.Models.CityTour
         public Nullable<double> Latitude { get; set; }
         public string MapNameImage { get; set; }
         public string Answer { get; set; }
+        public string VideoContentId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Hint> Hints { get; set; }
         public virtual Tour Tour { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Team> Teams { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tour> Tours { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tour> Tours1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tour> Tours2 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tour> Tours3 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tour> Tours4 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tour> Tours5 { get; set; }
+        public virtual ICollection<TourPuzzle> TourPuzzles { get; set; }
     }
 }

@@ -80,7 +80,10 @@
     </div>
     <div id="lightbox" style="display:none; z-index: 999;top:0px; width: 100%;height: 100%;position: fixed;background: rgba(0,0,0,0.8);">
         <!-- TODO 依照需求放影片 -->
-        <iframe height="300" style="width:100%;top: 50%;position: absolute;margin-top: -150px;" src="https://www.youtube.com/embed/Os_TqxlVM8A" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        @if (!Model.VideoContentId.IsNullOrWhiteSpace())
+        {
+            <iframe height="300" style="width: 100%; top: 50%; position: absolute; margin-top: -150px;" src="https://www.youtube.com/embed/@Model.VideoContentId" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        }
     </div>
 
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
@@ -92,10 +95,10 @@
     <!-- 設定時間 -->
     <script charset="utf-8" async defer>
 
-        $('.map-pic-frame').on('click', function(){
+        $('.map-pic-frame').on('click', function () {
             $('#lightbox').show(300);
         });
-        $('#lightbox').on('click', function(){
+        $('#lightbox').on('click', function () {
             $('#lightbox').hide(300);
         });
 

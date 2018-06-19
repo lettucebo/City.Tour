@@ -18,13 +18,11 @@ namespace City.Tour.Service
     {
         private CityTourEntities db;
         private TeamService teamService;
-        private TourService tourService;
 
         public PuzzleService()
         {
             db = new CityTourEntities();
             teamService = new TeamService(db);
-            tourService = new TourService(db);
         }
 
         public IPagedList<Puzzle> ListAllToPagedAndFilterSort(Guid tourId, string keyword = "", SortOrder sort = null, int page = 1, int pageSize = 10)
@@ -90,43 +88,18 @@ namespace City.Tour.Service
             db.Dispose();
         }
 
+        /// <summary>
+        /// 設定通過謎題地圖
+        /// </summary>
+        /// <param name="puzzleId"></param>
+        /// <param name="teamId"></param>
         public void SetPassMap(Guid puzzleId, Guid teamId)
         {
-            var puzzle = GetById(puzzleId);
-            var team = teamService.GetById(teamId);
-            var record = team.TeamRecords.First();
-            var tour = team.Tour;
+            var team = teamService.GetByIdIncludeAll(teamId);
+            var record = team.TeamRecords.First(x => x.TourPuzzle.PuzzleId == puzzleId);
 
-            if (puzzle.Id == tour.Puzzle1Id)
-            {
-                record.IsPassPuzzle1Map = true;
-                record.PassPuzzle1MapTime = DateTime.Now;
-            }
-            else if (puzzle.Id == tour.Puzzle2Id)
-            {
-                record.IsPassPuzzle2Map = true;
-                record.PassPuzzle2MapTime = DateTime.Now;
-            }
-            else if (puzzle.Id == tour.Puzzle3Id)
-            {
-                record.IsPassPuzzle3Map = true;
-                record.PassPuzzle3MapTime = DateTime.Now;
-            }
-            else if (puzzle.Id == tour.Puzzle4Id)
-            {
-                record.IsPassPuzzle4Map = true;
-                record.PassPuzzle4MapTime = DateTime.Now;
-            }
-            else if (puzzle.Id == tour.Puzzle5Id)
-            {
-                record.IsPassPuzzle5Map = true;
-                record.PassPuzzle5MapTime = DateTime.Now;
-            }
-            else if (puzzle.Id == tour.Puzzle6Id)
-            {
-                record.IsPassPuzzle6Map = true;
-                record.PassPuzzle6MapTime = DateTime.Now;
-            }
+            record.IsPassPuzzleMap = true;
+            record.PassPuzzleMapTime = DateTime.Now;
 
             db.SaveChanges();
         }
@@ -138,108 +111,45 @@ namespace City.Tour.Service
         /// <param name="teamId"></param>
         public Guid SetNextPuzzle(Guid puzzleId, Guid teamId)
         {
-            var team = teamService.GetById(teamId);
-            var currentPuzzleNum = team.CurrentPuzzleNum;
-            var currentPuzzleId = team.CurrentPuzzleId;
-            var tour = tourService.GetById(team.TourId);
-            var record = team.TeamRecords.First();
+            var team = teamService.GetByIdIncludeAll(teamId);
+            var record = team.TeamRecords.First(x => x.TourPuzzle.PuzzleId == puzzleId);
+            var tourPuzzles = team.Tour.TourPuzzles.ToList();
 
-            if (currentPuzzleId.HasValue && puzzleId != currentPuzzleId)
+            if (record.TourPuzzleId != team.CurrentTourPuzzleId)
             {
                 // 代表已經有人觸發往下一關了
-                return currentPuzzleId.Value;
+                return team.CurrentPuzzleId.Value;
             }
 
-            // 找出下一關的 Id，寫死邏輯
-            if (!currentPuzzleId.HasValue || currentPuzzleId.Value == tour.Puzzle1Id)
+            var nextTourPuzzle = tourPuzzles.FirstOrDefault(x => x.Sort == (team.CurrentTourPuzzleSort + 1));
+            if (nextTourPuzzle == null)
             {
-                if (tour.Puzzle2Id.HasValue)
-                {
-                    record.Puzzle1CompleteTime = DateTime.Now;
-                    record.Puzzle1StartTime = DateTime.Now;
-                    team.CurrentPuzzleId = tour.Puzzle2Id.Value;
-                    team.CurrentPuzzleNum = 2;
-                    db.SaveChanges();
-
-                    return tour.Puzzle2Id.Value;
-                }
-
-                // 沒有值，代表沒下一關
-                return Guid.Empty;
-            }
-            else if (currentPuzzleId.Value == tour.Puzzle2Id)
-            {
-                if (tour.Puzzle3Id.HasValue)
-                {
-                    record.Puzzle2CompleteTime = DateTime.Now;
-                    record.Puzzle3StartTime = DateTime.Now;
-                    team.CurrentPuzzleId = tour.Puzzle3Id.Value;
-                    team.CurrentPuzzleNum = 3;
-                    db.SaveChanges();
-
-                    return tour.Puzzle3Id.Value;
-                }
-
-                // 沒有值，代表沒下一關
-                return Guid.Empty;
-            }
-            else if (currentPuzzleId.Value == tour.Puzzle3Id)
-            {
-                if (tour.Puzzle4Id.HasValue)
-                {
-                    record.Puzzle3CompleteTime = DateTime.Now;
-                    record.Puzzle4StartTime = DateTime.Now;
-                    team.CurrentPuzzleId = tour.Puzzle4Id.Value;
-                    team.CurrentPuzzleNum = 4;
-                    db.SaveChanges();
-
-                    return tour.Puzzle4Id.Value;
-                }
-
-                // 沒有值，代表沒下一關
-                return Guid.Empty;
-            }
-            else if (currentPuzzleId.Value == tour.Puzzle4Id)
-            {
-                if (tour.Puzzle5Id.HasValue)
-                {
-                    record.Puzzle4CompleteTime = DateTime.Now;
-                    record.Puzzle5StartTime = DateTime.Now;
-                    team.CurrentPuzzleId = tour.Puzzle5Id.Value;
-                    team.CurrentPuzzleNum = 5;
-                    db.SaveChanges();
-
-                    return tour.Puzzle5Id.Value;
-                }
-
-                // 沒有值，代表沒下一關
-                return Guid.Empty;
-            }
-            else if (currentPuzzleId.Value == tour.Puzzle5Id)
-            {
-                if (tour.Puzzle6Id.HasValue)
-                {
-                    record.Puzzle5CompleteTime = DateTime.Now;
-                    record.Puzzle6StartTime = DateTime.Now;
-                    team.CurrentPuzzleId = tour.Puzzle6Id.Value;
-                    team.CurrentPuzzleNum = 6;
-                    db.SaveChanges();
-
-                    return tour.Puzzle6Id.Value;
-                }
-
-                // 沒有值，代表沒下一關
-                return Guid.Empty;
-            }
-            else
-            {
-                record.Puzzle6CompleteTime = DateTime.Now;
+                // 沒有下一關，代表已通關
                 team.IsComplete = true;
                 db.SaveChanges();
 
                 // 已通關
                 return Guid.Empty;
             }
+
+            // 設定下一關資訊
+            var newRecord = new TeamRecord();
+            newRecord.Id = Ci.Sequential.Guid.Create();
+            newRecord.TeamId = team.Id;
+            newRecord.CreateTime = DateTime.Now;
+            newRecord.ModifyTime = DateTime.Now;
+            newRecord.PuzzleStartTime = DateTime.Now;
+            newRecord.TourPuzzleId = nextTourPuzzle.Id;
+            newRecord.Sort = nextTourPuzzle.Sort;
+            team.TeamRecords.Add(newRecord);
+
+            team.CurrentTourPuzzleSort = nextTourPuzzle.Sort;
+            team.CurrentPuzzleId = nextTourPuzzle.PuzzleId;
+            team.CurrentTourPuzzleId = nextTourPuzzle.Id;
+
+            db.SaveChanges();
+
+            return team.CurrentPuzzleId.Value;
         }
     }
 }

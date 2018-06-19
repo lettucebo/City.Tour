@@ -73,13 +73,13 @@
     <Compile Include="Models\CityTour\Team.cs">
       <DependentUpon>CityTour.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\CityTour\TeamProgress.cs">
-      <DependentUpon>CityTour.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\CityTour\TeamRecord.cs">
       <DependentUpon>CityTour.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CityTour\Tour.cs">
+      <DependentUpon>CityTour.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CityTour\TourPuzzle.cs">
       <DependentUpon>CityTour.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CityTour\User.cs">

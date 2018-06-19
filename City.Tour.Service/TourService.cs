@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,7 +50,7 @@ namespace City.Tour.Service
 
         public Library.Models.CityTour.Tour GetById(Guid tourId)
         {
-            var data = db.Tours.FirstOrDefault(x => x.IsDelete == false);
+            var data = db.Tours.Include(x => x.TourPuzzles).FirstOrDefault(x => x.IsDelete == false);
             return data;
         }
     }
