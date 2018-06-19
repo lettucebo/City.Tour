@@ -124,7 +124,7 @@ namespace City.Tour.Service
                 return;
             string sql = @"
                             DELETE FROM TeamRecords WHERE TeamId = @teamId;
-                            UPDATE Teams SET [CurrentTourPuzzleSort] = 1, [CurrentPuzzleId] = NULL, [CurrentTourPuzzleId] = NULL WHERE Id = @teamId;
+                            UPDATE Teams SET [CurrentTourPuzzleSort] = 1, [CurrentPuzzleId] = NULL, [CurrentTourPuzzleId] = NULL, IsComplete = 0 WHERE Id = @teamId;
                             ";
 
             using (var conn = new SqlConnection(CityTourConnStr))
