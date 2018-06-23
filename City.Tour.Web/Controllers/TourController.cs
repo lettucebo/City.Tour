@@ -157,6 +157,9 @@ namespace City.Tour.Web.Controllers
                 return RedirectToAction("PuzzleMap", "Tour", new { puzzleId = nextPuzzleId });
             }
 
+            // 設定提示
+            ViewBag.hints = puzzle.Hints.ToArray();
+
             this.SetAlert("答案錯誤，請再試一次！");
             return View(puzzle);
         }
