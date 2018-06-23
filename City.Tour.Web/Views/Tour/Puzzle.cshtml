@@ -129,7 +129,7 @@
                     <text>
                         if (isActiveElem.hasClass('active' + '@i')) {
                             msg += '@i. ';
-                            msg += '@(hints[i].Content?.Replace("\r\n",""))';
+                            msg += '@(hints[i].Content?.Replace("\r\n","").Replace("\n",""))';
                             msg += "<br>";
                         }
                     </text>
