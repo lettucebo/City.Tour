@@ -57,7 +57,7 @@
                 <div class="msec" id="total-timer-msec"><div class="first"></div><div class="last"></div></div>
             </div>
         </div>
-        <div class="map-pic-frame">
+        <div class="map-pic-frame" style="height: 100%">
             @if (!Model.MapImage.IsNullOrWhiteSpace())
             {
                 <img class="map-pic" src="@Url.Content(Model.MapImage)" />
@@ -67,6 +67,7 @@
     <footer class="main-footer">
         <div class="map-input-frame" id="map-input">
             <img class="map-input-pic" src="~/Images/map-demo-msg.png" />
+            <img class="map-input-submit" src="~/Images/main-ans-submit.png">
         </div>
     </footer>
     <div id="dialog" title="請解答！" class="dialog">
