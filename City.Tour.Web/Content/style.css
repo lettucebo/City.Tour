@@ -59,7 +59,7 @@
     border: 0px;
 }
 
-#body .ui-dialog button.ui-dialog-titlebar-close:before {
+#body .ui-dialog .ui-dialog-titlebar-close:before {
     content: 'x';
     position: absolute;
     top: -5px;
