@@ -73,7 +73,7 @@ namespace City.Tour.Web.Controllers
 
             // 設定到期時間
             ViewBag.puzzleEndTime = record.PuzzleStartTime.AddMinutes(10);
-            ViewBag.endTime = team.EndTime;
+            ViewBag.endTime = team.EndTime ?? DateTime.Now.AddHours(2);
 
             return View(puzzle);
         }
@@ -102,7 +102,7 @@ namespace City.Tour.Web.Controllers
 
             // 設定到期時間
             ViewBag.puzzleEndTime = record.PuzzleStartTime.AddMinutes(10);
-            ViewBag.endTime = team.EndTime;
+            ViewBag.endTime = team.EndTime ?? DateTime.Now.AddHours(2);
 
             this.SetAlert("可能要仔細再想想，就差那臨門一腳了！");
             return View(puzzle);
@@ -139,7 +139,7 @@ namespace City.Tour.Web.Controllers
             // 設定提示
             ViewBag.hints = puzzle.Hints.ToArray();
             ViewBag.puzzleEndTime = record.PuzzleStartTime.AddMinutes(30);
-            ViewBag.endTime = team.EndTime;
+            ViewBag.endTime = team.EndTime ?? DateTime.Now.AddHours(2);
 
             return View(puzzle);
         }
@@ -179,7 +179,7 @@ namespace City.Tour.Web.Controllers
             // 設定提示
             ViewBag.hints = puzzle.Hints.ToArray();
             ViewBag.puzzleEndTime = record.PuzzleStartTime.AddMinutes(30);
-            ViewBag.endTime = team.EndTime;
+            ViewBag.endTime = team.EndTime ?? DateTime.Now.AddHours(2);
 
             this.SetAlert("答案錯誤，請再試一次！");
             return View(puzzle);

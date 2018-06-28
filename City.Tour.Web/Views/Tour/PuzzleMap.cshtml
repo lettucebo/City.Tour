@@ -78,15 +78,15 @@
             <button type="submit" class="btn btn-primary float-right">送出</button>
         }
     </div>
-    
-        <div id="lightbox" style="display:none; z-index: 999;top:0px; width: 100%;height: 100%;position: fixed;background: rgba(0,0,0,0.8);">
-            <!-- 依照需求放影片 -->
-            @if (!Model.VideoContentId.IsNullOrWhiteSpace())
-            {
-                <iframe id="lightbox-video" height="300" style="width: 100%; top: 50%; position: absolute; margin-top: -150px;" src="https://www.youtube.com/embed/@Model.VideoContentId" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-            }        
-        </div>
-    
+
+    <div id="lightbox" style="display:none; z-index: 999;top:0px; width: 100%;height: 100%;position: fixed;background: rgba(0,0,0,0.8);">
+        <!-- 依照需求放影片 -->
+        @if (!Model.VideoContentId.IsNullOrWhiteSpace())
+        {
+            <iframe id="lightbox-video" height="300" style="width: 100%; top: 50%; position: absolute; margin-top: -150px;" src="https://www.youtube.com/embed/@Model.VideoContentId" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        }
+    </div>
+
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js" integrity="sha256-xNjb53/rY+WmG+4L6tTl9m6PpqknWZvRt0rO1SRnJzw=" crossorigin="anonymous"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js" integrity="sha384-feJI7QwhOS+hwpX2zkaeJQjeiwlhOP+SdQDqhgvvo1DsjtiSQByFdThsxO669S2D" crossorigin="anonymous"></script>
@@ -112,7 +112,7 @@
 
         $(document).ready(function () {
             console.log("ready!");
-            /* 設定時間 請把 getDemoTime() 換成 microseconds 或是時間字串 */
+            /* 謎題到期時間 */
             var time = getTimeDiffString('@(ViewBag.puzzleEndTime.ToString("yyyy-MM-dd HH:mm:ss"))');
 
             var callback = function () {
@@ -122,7 +122,7 @@
             setTime(time);
             startCountDown(callback);
 
-            /*TODO 設定總時間*/
+            /* 路線到期時間 */
             var time = getTimeDiffString('@(ViewBag.endTime.ToString("yyyy-MM-dd HH:mm:ss"))');
             var callbackTotal = function () {
                 /*TODO 設定時間到 call back*/
@@ -130,8 +130,8 @@
                 alert('時間到！');
             }
 
-            //setTimeTotal(time);
-            //startCountDownTotal(callbackTotal);
+            setTimeTotal(time);
+            startCountDownTotal(callbackTotal);
 
             /* 設定點擊總體時間的開關 */
             $('documnent').ready(function () {
