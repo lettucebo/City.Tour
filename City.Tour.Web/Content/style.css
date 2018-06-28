@@ -54,5 +54,14 @@
 }
 
 #body .ui-dialog .ui-dialog-titlebar-close{
-    -webkit-appearance: checkbox;
+    -webkit-appearance: none;
+    background: transparent;
+    border: 0px;
+}
+
+#body .ui-dialog button.ui-dialog-titlebar-close:before {
+    content: 'x';
+    position: absolute;
+    top: -5px;
+    right: 5px;
 }
