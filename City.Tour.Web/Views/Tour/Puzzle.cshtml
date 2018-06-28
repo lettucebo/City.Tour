@@ -139,7 +139,7 @@
             }
         });
 
-        /* TODO 設定點擊故事頁按鈕 開啟或是跳轉 */
+        /* 設定點擊故事頁按鈕 開啟或是跳轉 */
         $('#main-story-logo').on('click', function () {
             location.href = '/story-back.html';
         });
@@ -151,7 +151,7 @@
         $('.scrollbar-inner').css('margin-top', '10px');
 
         /*TODO 設定時間 請把 getDemoTime() 換成 microseconds 或是時間字串*/
-        var time = getTimeDiffString(getDemoTime());
+        var time = getTimeDiffString('@(ViewBag.puzzleEndTime.ToString("yyyy-MM-dd HH:mm:ss"))');
 
         var callback = function () {
             /*TODO 設定時間到 call back*/
@@ -163,7 +163,7 @@
         startCountDown(callback, 5);
 
         /*TODO 設定總時間*/
-        var time = getTimeDiffString(getDemoTime(120));
+        var time = getTimeDiffString('@(ViewBag.endTime.ToString("yyyy-MM-dd HH:mm:ss"))');
         var callbackTotal = function () {
             /*TODO 設定時間到 call back*/
             setEgg(0);
