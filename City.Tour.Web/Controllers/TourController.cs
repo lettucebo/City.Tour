@@ -15,7 +15,6 @@ namespace City.Tour.Web.Controllers
 {
     public class TourController : BaseController
     {
-        private TourService tourService = new TourService();
         private PuzzleService puzzleService = new PuzzleService();
         private TeamService teamService = new TeamService();
 
@@ -72,7 +71,9 @@ namespace City.Tour.Web.Controllers
                 return RedirectToAction("Puzzle", "Tour", new { puzzleId = record.TourPuzzle.PuzzleId });
             }
 
-            // todo 設定到期時間
+            // 設定到期時間
+            ViewBag.puzzleEndTime = record.PuzzleStartTime.AddMinutes(10);
+            ViewBag.endTime = team.EndTime;
 
             return View(puzzle);
         }
@@ -85,7 +86,7 @@ namespace City.Tour.Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "找不到 puzzle");
 
             var teamId = new Guid(((ClaimsPrincipal)User).FindFirst("TeamId").Value ?? Guid.Empty.ToString());
-
+            var team = teamService.GetByIdIncludeAll(teamId);
 
             if (!answer.IsNullOrWhiteSpace() && answer.ToUpper().Trim() == puzzle.MapAnswer.ToUpper().Trim())
             {
@@ -93,7 +94,15 @@ namespace City.Tour.Web.Controllers
                 return RedirectToAction("Puzzle", "Tour", new { puzzleId });
             }
 
-            // todo 設定到期時間
+            var record = team.TeamRecords.OrderByDescending(x => x.Sort).First(x => x.TourPuzzle.PuzzleId == puzzle.Id);
+            if (record.IsPassPuzzleMap)
+            {
+                return RedirectToAction("Puzzle", "Tour", new { puzzleId = record.TourPuzzle.PuzzleId });
+            }
+
+            // 設定到期時間
+            ViewBag.puzzleEndTime = record.PuzzleStartTime.AddMinutes(10);
+            ViewBag.endTime = team.EndTime;
 
             this.SetAlert("可能要仔細再想想，就差那臨門一腳了！");
             return View(puzzle);
@@ -129,6 +138,8 @@ namespace City.Tour.Web.Controllers
 
             // 設定提示
             ViewBag.hints = puzzle.Hints.ToArray();
+            ViewBag.puzzleEndTime = record.PuzzleStartTime.AddMinutes(30);
+            ViewBag.endTime = team.EndTime;
 
             return View(puzzle);
         }
@@ -142,6 +153,7 @@ namespace City.Tour.Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "找不到 puzzle");
 
             var teamId = new Guid(((ClaimsPrincipal)User).FindFirst("TeamId").Value ?? Guid.Empty.ToString());
+            var team = teamService.GetByIdIncludeAll(teamId);
 
             if (!answer.IsNullOrWhiteSpace() && answer.ToUpper().Trim() == puzzle.Answer.ToUpper().Trim())
             {
@@ -157,8 +169,17 @@ namespace City.Tour.Web.Controllers
                 return RedirectToAction("PuzzleMap", "Tour", new { puzzleId = nextPuzzleId });
             }
 
+            // 判斷是否已經通過地圖
+            var record = team.TeamRecords.OrderByDescending(x => x.Sort).First(x => x.TourPuzzle.PuzzleId == puzzle.Id);
+            if (!record.IsPassPuzzleMap)
+            {
+                return RedirectToAction("PuzzleMap", "Tour", new { puzzleId = record.TourPuzzle.PuzzleId });
+            }
+
             // 設定提示
             ViewBag.hints = puzzle.Hints.ToArray();
+            ViewBag.puzzleEndTime = record.PuzzleStartTime.AddMinutes(30);
+            ViewBag.endTime = team.EndTime;
 
             this.SetAlert("答案錯誤，請再試一次！");
             return View(puzzle);

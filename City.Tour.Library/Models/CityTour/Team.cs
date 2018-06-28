@@ -30,6 +30,7 @@ namespace City.Tour.Library.Models.CityTour
         public bool IsComplete { get; set; }
         public Nullable<System.Guid> CurrentPuzzleId { get; set; }
         public Nullable<System.Guid> CurrentTourPuzzleId { get; set; }
+        public Nullable<System.DateTime> EndTime { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TeamRecord> TeamRecords { get; set; }

@@ -71,7 +71,6 @@
         </div>
     </footer>
     <div id="dialog" title="請解答！" class="dialog">
-        <!-- TODO 設定送出位址 -->
         @using (Html.BeginForm())
         {
             <input type="text" name="answer" class="form-control" placeholder="輸入答案" />
@@ -113,8 +112,8 @@
 
         $(document).ready(function () {
             console.log("ready!");
-            /*TODO 設定時間 請把 getDemoTime() 換成 microseconds 或是時間字串*/
-            var time = getTimeDiffString(getDemoTime());
+            /* 設定時間 請把 getDemoTime() 換成 microseconds 或是時間字串 */
+            var time = getTimeDiffString('@(ViewBag.puzzleEndTime.ToString("yyyy-MM-dd HH:mm:ss"))');
 
             var callback = function () {
                 /*TODO 設定時間到 call back*/
@@ -124,7 +123,7 @@
             startCountDown(callback);
 
             /*TODO 設定總時間*/
-            var time = getTimeDiffString(getDemoTime(120));
+            var time = getTimeDiffString('@(ViewBag.endTime.ToString("yyyy-MM-dd HH:mm:ss"))');
             var callbackTotal = function () {
                 /*TODO 設定時間到 call back*/
                 setEgg(0);

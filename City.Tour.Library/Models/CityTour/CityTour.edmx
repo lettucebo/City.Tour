@@ -66,6 +66,7 @@
           <Property Name="IsComplete" Type="bit" Nullable="false" />
           <Property Name="CurrentPuzzleId" Type="uniqueidentifier" />
           <Property Name="CurrentTourPuzzleId" Type="uniqueidentifier" />
+          <Property Name="EndTime" Type="datetime" />
         </EntityType>
         <EntityType Name="TourPuzzles">
           <Key>
@@ -470,6 +471,7 @@
           <NavigationProperty Name="TeamRecords" Relationship="CityTourModel.FK_TeamRecord_Teams" FromRole="Team" ToRole="TeamRecord" />
           <NavigationProperty Name="Users" Relationship="CityTourModel.FK_Members_Teams" FromRole="Team" ToRole="User" />
           <NavigationProperty Name="Tour" Relationship="CityTourModel.FK_Teams_Tours" FromRole="Team" ToRole="Tour" />
+          <Property Name="EndTime" Type="DateTime" Precision="3" />
         </EntityType>
         <Association Name="FK_TeamRecord_Teams">
           <End Type="CityTourModel.Team" Role="Team" Multiplicity="1" />
@@ -612,6 +614,7 @@
           <EntitySetMapping Name="Teams">
             <EntityTypeMapping TypeName="CityTourModel.Team">
               <MappingFragment StoreEntitySet="Teams">
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
                 <ScalarProperty Name="CurrentTourPuzzleId" ColumnName="CurrentTourPuzzleId" />
                 <ScalarProperty Name="CurrentPuzzleId" ColumnName="CurrentPuzzleId" />
                 <ScalarProperty Name="IsComplete" ColumnName="IsComplete" />
