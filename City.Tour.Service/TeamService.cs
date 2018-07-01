@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using City.Tour.Library.Models.CityTour;
 using City.Tour.Service.Base;
 using Dapper;
+using X.PagedList;
 
 namespace City.Tour.Service
 {
@@ -144,6 +145,13 @@ namespace City.Tour.Service
             {
                 conn.Execute(sql, new { teamId = team.Id });
             }
+        }
+
+        public IEnumerable<Team> ListAllTopPaged(int page = 1, int pageSize = 10)
+        {
+            var query = db.Teams.OrderBy(x => x.Name).AsQueryable();
+            var paged = query.ToPagedList(page, pageSize);
+            return paged;
         }
     }
 }

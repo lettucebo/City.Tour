@@ -12,6 +12,13 @@ namespace City.Tour.Web.Areas.Admins.Controllers
     {
         private TeamService teamService = new TeamService();
 
+        public ActionResult Index(int page = 1)
+        {
+            var teams = teamService.ListAllTopPaged(page);
+
+            return View();
+        }
+
         public ActionResult ClearTeamRecord(string teamCode)
         {
             teamService.DeleteTeamRecordByTeamCode(teamCode);
